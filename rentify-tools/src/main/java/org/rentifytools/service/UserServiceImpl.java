@@ -54,6 +54,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .email(dto.getEmail())
                 .password(encodedPass)
                 .roles(roles)
+                .phone(dto.getPhone())
                 .build();
         User savedUser = repository.save(user);
         return mapper.map(savedUser, UserResponseDto.class);
@@ -67,11 +68,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public UserResponseDto getUserById(Long id) {
+        return mapper.map(repository.findById(id), UserResponseDto.class);
+    }
+
+    @Override
     @Transactional
-    public UserResponseDto setRoleAdmin(Long id) {
+    public UserResponseDto setRole(Long id, String title) {
         User entity = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User with id " + id + " not found"));
-        Role roleAdmin = roleService.getRole("ADMIN");
+        Role roleAdmin = roleService.getRole(title);
         HashSet<Role> roles = new HashSet<>(entity.getRoles());
         roles.add(roleAdmin);
         entity.setRoles(roles);
