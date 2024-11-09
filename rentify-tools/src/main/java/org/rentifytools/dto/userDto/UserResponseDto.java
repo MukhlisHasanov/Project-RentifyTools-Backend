@@ -14,9 +14,9 @@ import java.util.Set;
 @Setter
 public class UserResponseDto {
     private Long id;
-    private String username;
+    private String firstname;
+    private String lastname;
     private String email;
-    private String password;
     private String phone;
     private Set<RoleResponseDto> roles;
 }
