@@ -1,6 +1,7 @@
 package org.rentifytools.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.rentifytools.dto.userDto.UserRequestDto;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "User API", description = "Methods for working with users")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/users")
