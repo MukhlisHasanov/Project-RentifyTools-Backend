@@ -1,5 +1,7 @@
 package org.rentifytools.enums;
 
-public enum ToolsAvailability {
-    
+public enum ToolsAvailabilityStatus {
+    RENTED,
+    AVAILABLE,
+    PENDING;
 }
