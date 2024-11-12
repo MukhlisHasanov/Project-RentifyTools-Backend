@@ -19,15 +19,23 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
     private final UserRepository repository;
     private final RoleService roleService;
     private final BCryptPasswordEncoder encoder;
     private final ModelMapper mapper;
+
+//    @Override
+//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//
+//        User user = repository.findByEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " not found"));
+//
+//        return new CustomUserDetails(user);
+//    }
 
     @Override
     @Transactional
@@ -62,11 +70,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto getUserById(Long id) {
         return mapper.map(repository.findById(id), UserResponseDto.class);
-    }
-
-    @Override
-    public Optional<User> getUserByEmail(String email) {
-        return repository.findByEmail(email);
     }
 
     @Override
