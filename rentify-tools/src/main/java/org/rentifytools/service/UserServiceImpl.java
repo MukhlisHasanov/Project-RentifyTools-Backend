@@ -22,20 +22,20 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService{
     private final UserRepository repository;
     private final RoleService roleService;
     private final BCryptPasswordEncoder encoder;
     private final ModelMapper mapper;
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
-        User user = repository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " not found"));
-
-        return new CustomUserDetails(user);
-    }
+//    @Override
+//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//
+//        User user = repository.findByEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " not found"));
+//
+//        return new CustomUserDetails(user);
+//    }
 
     @Override
     @Transactional

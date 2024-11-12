@@ -35,12 +35,12 @@ public class UserRequestDto {
 
     @Size(min = 3, max = 15)
     @NotBlank
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]+$", message = "Should be strong")
+    //@Pattern(regexp = "^(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]+$", message = "Should be strong")
     @Schema(description = "User password", example = "john1234")
     private String password;
 
     @Size(min = 6, max = 14)
-    @Pattern(regexp = "^\\+?\\d{1,3}?[- .]?\\(?\\d{1,4}?\\)?[- .]?\\d{1,4}[- .]?\\d{1,9}$", message = "Invalid phone number")
+    //@Pattern(regexp = "^\\+?[1-9]\\d{0,2}[- .]?\\(?\\d{1,4}\\)?[- .]?\\d{1,4}[- .]?\\d{1,9}|^\\d{10,15}$", message = "Invalid phone number")
     @Schema(description = "User phone number", example = "123-456-789")
     private String phone;
 }
