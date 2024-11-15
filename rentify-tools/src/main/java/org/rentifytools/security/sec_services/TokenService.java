@@ -21,17 +21,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-// 6d5SM/khw/d4mEb4zRTrn0KVwz79LmUKOg0R1v/0lVI=
-// DL96n5CqGIKlxg9LEH/GsyCzwoTlEmYBBbBHoKRCtmk=
 @Service
 public class TokenService {
     private SecretKey accessKey;
     private SecretKey refreshKey;
     private RoleService roleService;
 
-    @Value("${access.token.days}")
+    @Value("${time.access}")
     private int accessTokenDays;
-    @Value("${refresh.token.days}")
+    @Value("${time.refresh}")
     private int refreshTokenDays;
 
     public TokenService(@Value("${key.access}") String accessSecret,

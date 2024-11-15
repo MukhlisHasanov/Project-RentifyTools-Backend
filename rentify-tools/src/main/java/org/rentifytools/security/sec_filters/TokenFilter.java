@@ -6,6 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.rentifytools.security.AuthInfo;
 import org.rentifytools.security.sec_services.TokenService;
@@ -24,7 +25,8 @@ public class TokenFilter extends GenericFilterBean {
                          ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
 
-        HttpServletRequest request = (HttpServletRequest) servletResponse;
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
         String authorizationHeader = request.getHeader("Authorization");
         String token = (authorizationHeader != null && !authorizationHeader.startsWith("Bearer ")) ? authorizationHeader.substring(7) : null;
 
@@ -34,6 +36,6 @@ public class TokenFilter extends GenericFilterBean {
             authInfo.setAuthenticated(true);
             SecurityContextHolder.getContext().setAuthentication(authInfo);
         }
-        filterChain.doFilter(request, servletResponse);
+        filterChain.doFilter(request, response);
     }
 }
