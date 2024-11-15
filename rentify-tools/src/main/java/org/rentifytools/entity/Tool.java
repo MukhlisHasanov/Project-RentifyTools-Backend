@@ -20,7 +20,6 @@ public class Tool {
     @Column(name = "ownerId")
     private Long ownerId;
 
-
     private String title;
     private String description;
     private ToolsAvailabilityStatus status;
