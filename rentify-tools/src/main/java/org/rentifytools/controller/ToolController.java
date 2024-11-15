@@ -3,7 +3,7 @@ package org.rentifytools.controller;
 import lombok.RequiredArgsConstructor;
 import org.rentifytools.entity.Tool;
 import org.rentifytools.enums.ToolsAvailabilityStatus;
-import org.rentifytools.service.ToolService;
+import org.rentifytools.service.ToolServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ToolController {
 
-    private final ToolService toolService;
+    private final ToolServiceImpl toolService;
 
     @GetMapping()
     public List<Tool> getAllTools() {

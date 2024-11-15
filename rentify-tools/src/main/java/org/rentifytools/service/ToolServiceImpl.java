@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ToolService {
+public class ToolServiceImpl {
 
     private final ToolRepository toolRepository;
 
