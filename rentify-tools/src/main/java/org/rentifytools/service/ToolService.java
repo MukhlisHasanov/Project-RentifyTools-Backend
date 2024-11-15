@@ -37,8 +37,27 @@ public class ToolService {
                            ToolsAvailabilityStatus status,
                            String image,
                            Integer price) {
-        toolRepository.findById(toolId).
+        Tool tool = toolRepository.findById(toolId).
                 orElseThrow(() -> new NotFoundException("Tool with id " + toolId + " not found"));
 
+        if (toolName != null && toolName.length() > 2) {
+            tool.setTitle(toolName);
+        }
+
+        if (description != null && description.length() > 2) {
+            tool.setDescription(description);
+        }
+
+        if (status != null) {
+            tool.setStatus(status);
+        }
+
+        if (image != null && image.length() > 4) {
+            tool.setImage(image);
+        }
+
+        if (price != null && price > 0) {
+            tool.setPrice(price);
+        }
     }
 }
