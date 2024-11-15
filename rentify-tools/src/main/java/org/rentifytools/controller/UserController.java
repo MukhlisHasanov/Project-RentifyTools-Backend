@@ -52,7 +52,7 @@ public class UserController {
     @Operation(summary = "Removing a user from the list")
     @DeleteMapping("/{id}")
     public ResponseEntity<UserResponseDto> deleteUser(@PathVariable (name = "id") Long id) {
-        return new ResponseEntity(service.deleteUser(id), HttpStatus.OK);
+        return new ResponseEntity<>(service.deleteUser(id), HttpStatus.OK);
     }
 
     @ExceptionHandler(NotFoundException.class)
