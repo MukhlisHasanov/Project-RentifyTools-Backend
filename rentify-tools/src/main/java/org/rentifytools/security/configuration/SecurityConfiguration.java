@@ -1,9 +1,11 @@
 package org.rentifytools.security.configuration;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -13,6 +15,8 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfiguration {
     @Bean
     public BCryptPasswordEncoder encoder() {
@@ -32,7 +36,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(x->x.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+                .sessionManagement(x->x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(HttpMethod.POST, "api/users").permitAll()
@@ -45,7 +49,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.PUT, "api/tools/{toolId}").hasAnyRole("USER","ADMIN")
                                 .requestMatchers(HttpMethod.DELETE,"api/tools/{toolId}").hasAnyRole("USER","ADMIN")
                                 .anyRequest().authenticated())
-                .httpBasic(Customizer.withDefaults());
+                .httpBasic(AbstractHttpConfigurer::disable);
 
         return http.build();
     }
