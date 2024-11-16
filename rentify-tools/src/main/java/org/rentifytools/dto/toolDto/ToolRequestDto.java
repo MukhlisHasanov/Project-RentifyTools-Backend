@@ -1,4 +1,4 @@
-package org.rentifytools.dto.roleDto;
+package org.rentifytools.dto.toolDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class RoleResponseDto {
-    private Long id;
+public class ToolRequestDto {
     private String title;
+    private String description;
+    private String image;
+    private Integer price;
 }
