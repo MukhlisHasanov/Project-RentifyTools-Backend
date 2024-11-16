@@ -1,9 +1,11 @@
 package org.rentifytools.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.rentifytools.dto.toolDto.ToolRequestDto;
+import org.rentifytools.dto.toolDto.ToolResponseDto;
 import org.rentifytools.entity.Tool;
 import org.rentifytools.enums.ToolsAvailabilityStatus;
-import org.rentifytools.service.ToolServiceImpl;
+import org.rentifytools.service.ToolService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,32 +15,32 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ToolController {
 
-    private final ToolServiceImpl toolService;
+    private final ToolService toolService;
 
     @GetMapping()
-    public List<Tool> getAllTools() {
+    public List<ToolResponseDto> getAllTools() {
         return toolService.getAllTools();
     }
 
     @PostMapping
-    public void addTool(@RequestBody Tool tool) {
-        toolService.addTool(tool);
+    public ToolResponseDto addTool(@RequestBody ToolRequestDto dto) {
+        return toolService.addNewTool(dto);
     }
 
-    @DeleteMapping("{toolId}")
-    public void deleteTool(@PathVariable("toolId") Long toolId) {
-        toolService.deleteTool(toolId);
-    }
+//    @DeleteMapping("{toolId}")
+//    public void deleteTool(@PathVariable("toolId") Long toolId) {
+//        toolService.deleteTool(toolId);
+//    }
 
-    @PutMapping("{toolId}")
-    public void updateTool(
-            @PathVariable("toolId") Long toolId,
-            @RequestParam(required = false) String toolName,
-            @RequestParam(required = false) String description,
-            @RequestParam(required = false) ToolsAvailabilityStatus status,
-            @RequestParam(required = false) String image,
-            @RequestParam(required = false) Integer price) {
-        toolService.updateTool(toolId, toolName, description, status, image, price);
-    }
+//    @PutMapping("{toolId}")
+//    public void updateTool(
+//            @PathVariable("toolId") Long toolId,
+//            @RequestParam(required = false) String toolName,
+//            @RequestParam(required = false) String description,
+//            @RequestParam(required = false) ToolsAvailabilityStatus status,
+//            @RequestParam(required = false) String image,
+//            @RequestParam(required = false) Integer price) {
+//        toolService.updateTool(toolId, toolName, description, status, image, price);
+//    }
 
 }

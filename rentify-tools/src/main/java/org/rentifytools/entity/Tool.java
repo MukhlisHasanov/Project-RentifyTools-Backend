@@ -19,11 +19,12 @@ public class Tool {
     @Column(name = "ownerId", nullable = false, updatable = false)
     private Long ownerId;
 
+//    @OneToOne (mappedBy = "tools", cascade = CascadeType.ALL)
+//    private Long ownerId;
+
     private String title;
     private String description;
     private ToolsAvailabilityStatus status;
     private String image;
     private Integer price;
-
-
 }
