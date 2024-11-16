@@ -36,23 +36,19 @@ public class SecurityConfiguration {
 //
 //        return http.build();
 //    }
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(x->x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(
-                        auth -> auth
-                                .requestMatchers(HttpMethod.POST, "api/users").permitAll()
-                                .requestMatchers(HttpMethod.GET, "api/users/{id}").hasAnyRole("USER","ADMIN")
-                                .requestMatchers(HttpMethod.GET,"api/users").permitAll()
-                                .requestMatchers(HttpMethod.PATCH,"api/users/{id}").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.DELETE,"api/users").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.GET, "api/tools").permitAll()
-                                .requestMatchers(HttpMethod.POST, "api/tools").hasAnyRole("USER","ADMIN")
-                                .requestMatchers(HttpMethod.PUT, "api/tools/{toolId}").hasAnyRole("USER","ADMIN")
-                                .requestMatchers(HttpMethod.DELETE,"api/tools/{toolId}").hasAnyRole("USER","ADMIN")
-                                .anyRequest().authenticated())
-                .httpBasic(AbstractHttpConfigurer::disable);
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        http.csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(x -> x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/api/users/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/users").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/refresh").permitAll()
+                        .anyRequest().authenticated())
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
