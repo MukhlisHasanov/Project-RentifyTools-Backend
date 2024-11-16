@@ -12,6 +12,7 @@ public interface ToolRepository extends JpaRepository<Tool, Long>{
 
     @Query("SELECT tool FROM Tool tool WHERE tool.title = ?1")
     Optional<Tool> findByName(String toolName);
+
 }
 
 

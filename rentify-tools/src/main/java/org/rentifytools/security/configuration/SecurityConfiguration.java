@@ -40,6 +40,10 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.GET,"api/users").permitAll()
                                 .requestMatchers(HttpMethod.PATCH,"api/users/{id}").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.DELETE,"api/users").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "api/tools").permitAll()
+                                .requestMatchers(HttpMethod.POST, "api/tools").hasAnyRole("USER","ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "api/tools/{toolId}").hasAnyRole("USER","ADMIN")
+                                .requestMatchers(HttpMethod.DELETE,"api/tools/{toolId}").hasAnyRole("USER","ADMIN")
                                 .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());
 

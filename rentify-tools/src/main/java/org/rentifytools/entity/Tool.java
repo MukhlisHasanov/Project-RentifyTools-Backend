@@ -6,7 +6,6 @@ import org.rentifytools.enums.ToolsAvailabilityStatus;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Getter
 @Setter
 @Entity
@@ -14,17 +13,18 @@ import org.rentifytools.enums.ToolsAvailabilityStatus;
 public class Tool {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "ownerId")
+    @Column(name = "ownerId", nullable = false, updatable = false)
     private Long ownerId;
+
+//    @OneToOne (mappedBy = "tools", cascade = CascadeType.ALL)
+//    private Long ownerId;
 
     private String title;
     private String description;
     private ToolsAvailabilityStatus status;
     private String image;
     private Integer price;
-
-
 }
