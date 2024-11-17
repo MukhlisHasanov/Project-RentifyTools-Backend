@@ -26,5 +26,5 @@ public class Tool {
     private String description;
     private ToolsAvailabilityStatus status;
     private String image;
-    private Integer price;
+    private Double price;
 }
