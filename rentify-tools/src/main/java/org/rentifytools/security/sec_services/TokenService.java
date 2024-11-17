@@ -42,10 +42,15 @@ public class TokenService {
 
     public String generateAccessToken(CustomUserDetails userDetails) {
         Date expirationDate = calcExpirationDate(accessTokenDays);
+
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(authority -> authority.getAuthority().replace("ROLE_", ""))
+                .toList();
+
         return Jwts.builder()
                 .subject(userDetails.getUsername())
                 .expiration(expirationDate)
-                .claim("roles", userDetails.getAuthorities())
+                .claim("roles", roles)
                 .claim("email", userDetails.getUsername())
                 .signWith(accessKey)
                 .compact();
@@ -114,8 +119,7 @@ public class TokenService {
 
         if (rolesList != null) {
             for (String roleName : rolesList) {
-                String roleTitle = roleName.replace("ROLE_", "");
-                Role role = roleService.getRole(roleTitle);
+                Role role = roleService.getRole(roleName);
                 if (role != null) {
                     roles.add(role);
                 }

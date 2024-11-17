@@ -10,15 +10,12 @@ import org.rentifytools.entity.User;
 import org.rentifytools.exception.DuplicateEmailException;
 import org.rentifytools.exception.NotFoundException;
 import org.rentifytools.repository.UserRepository;
-import org.rentifytools.security.CustomUserDetails;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -70,6 +67,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserResponseDto getUserById(Long id) {
         return mapper.map(repository.findById(id), UserResponseDto.class);
+    }
+
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+        return repository.findByEmail(email);
     }
 
     @Override
