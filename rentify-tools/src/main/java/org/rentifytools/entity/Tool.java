@@ -19,7 +19,7 @@ public class Tool {
 
     @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "userId", nullable = false, updatable = false)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "title")
