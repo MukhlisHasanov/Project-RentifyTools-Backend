@@ -2,6 +2,7 @@ package org.rentifytools.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.rentifytools.enums.ToolsAvailabilityStatus;
 
 @AllArgsConstructor
@@ -16,15 +17,24 @@ public class Tool {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "ownerId", nullable = false, updatable = false)
-    private Long ownerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "userId", nullable = false, updatable = false)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-//    @OneToOne (mappedBy = "tools", cascade = CascadeType.ALL)
-//    private Long ownerId;
-
+    @Column(name = "title")
     private String title;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.ORDINAL)
     private ToolsAvailabilityStatus status;
+
+    @Column(name = "price")
+    private Double price;
+
+    @Column(name = "image")
     private String image;
-    private Integer price;
 }

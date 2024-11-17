@@ -1,9 +1,9 @@
 package org.rentifytools.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.rentifytools.dto.toolDto.ToolRequestDto;
 import org.rentifytools.dto.toolDto.ToolResponseDto;
-import org.rentifytools.entity.Tool;
 import org.rentifytools.enums.ToolsAvailabilityStatus;
 import org.rentifytools.service.ToolService;
 import org.springframework.web.bind.annotation.*;
@@ -22,25 +22,27 @@ public class ToolController {
         return toolService.getAllTools();
     }
 
+//    @GetMapping()
+//    public List<ToolResponseDto> getToolsByStatus(@RequestParam(name = "status", required = false) ToolsAvailabilityStatus status) {
+//        return toolService.getToolsByStatus(status);
+//    }
+
     @PostMapping
     public ToolResponseDto addTool(@RequestBody ToolRequestDto dto) {
         return toolService.addNewTool(dto);
     }
 
-//    @DeleteMapping("{toolId}")
-//    public void deleteTool(@PathVariable("toolId") Long toolId) {
-//        toolService.deleteTool(toolId);
-//    }
+    @Operation(summary = "Editing tool information")
+    @PutMapping("{toolId}")
+    public ToolResponseDto editTool(@PathVariable(name = "toolId") Long toolId, @RequestBody ToolRequestDto dto) {
+        return toolService.updateTool(toolId, dto);
+    }
 
-//    @PutMapping("{toolId}")
-//    public void updateTool(
-//            @PathVariable("toolId") Long toolId,
-//            @RequestParam(required = false) String toolName,
-//            @RequestParam(required = false) String description,
-//            @RequestParam(required = false) ToolsAvailabilityStatus status,
-//            @RequestParam(required = false) String image,
-//            @RequestParam(required = false) Integer price) {
-//        toolService.updateTool(toolId, toolName, description, status, image, price);
-//    }
+    @Operation(summary = "Changing the availability status of the tool")
+    @PatchMapping("{toolId}")
+    public ToolResponseDto setToolStatus(@PathVariable(name = "toolId") Long toolId,
+                                         @RequestParam(name = "status", required = true,  defaultValue = "AVAILABLE") ToolsAvailabilityStatus status) {
+        return toolService.setToolStatus(toolId, status);
+    }
 
 }
