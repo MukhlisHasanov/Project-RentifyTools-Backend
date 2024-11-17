@@ -70,10 +70,6 @@ public class ToolServiceImpl implements ToolService {
 //        return null;
 //    }
 
-//    public List<Tool> getAllToolsByUser(Long userId) {
-//        return toolRepository.findByUserId(userId);
-//    }
-
 
     @Override
     public List<ToolResponseDto> getAllToolsByUser(Long userId) {
