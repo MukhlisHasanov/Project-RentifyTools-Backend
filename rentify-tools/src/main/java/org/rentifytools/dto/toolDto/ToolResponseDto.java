@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.rentifytools.dto.userDto.UserResponseDto;
+import org.rentifytools.entity.User;
 import org.rentifytools.enums.ToolsAvailabilityStatus;
 
 @AllArgsConstructor
@@ -12,7 +14,7 @@ import org.rentifytools.enums.ToolsAvailabilityStatus;
 @Setter
 public class ToolResponseDto {
     private Long id;
-    private Long ownerId;
+    private UserResponseDto user;
     private String title;
     private String description;
     private ToolsAvailabilityStatus status;
