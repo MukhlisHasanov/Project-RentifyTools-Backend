@@ -13,5 +13,5 @@ public class ToolRequestDto {
     private String title;
     private String description;
     private String image;
-    private Integer price;
+    private Double price;
 }
