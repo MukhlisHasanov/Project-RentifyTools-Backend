@@ -14,10 +14,13 @@ public interface ToolService {
     ToolResponseDto updateTool(Long toolId, ToolRequestDto dto);
 
     ToolResponseDto setToolStatus(Long toolId, ToolsAvailabilityStatus status);
-
+//   ===================================
 //    List<ToolResponseDto> getToolsByStatus(ToolsAvailabilityStatus status);
+//   ===================================
 
 //    ToolResponseDto deleteTool(Long toolId);
 
     List<ToolResponseDto> getAllToolsByUser(Long userId);
+
+    ToolResponseDto deleteTool(Long toolId);
 }
