@@ -2,6 +2,7 @@ package org.rentifytools.repository;
 
 import org.rentifytools.dto.toolDto.ToolResponseDto;
 import org.rentifytools.entity.Tool;
+import org.rentifytools.enums.ToolsAvailabilityStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -14,10 +15,15 @@ public interface ToolRepository extends JpaRepository<Tool, Long>{
 
 //    List<Tool> findByStatus(ToolsAvailabilityStatus status);
 
+//   ===================================
+
+    List<Tool> findByTitle(String title);
+    List<Tool> findByTitleContaining(String title);
+    List<Tool> findByTitleAndStatus(String title, ToolsAvailabilityStatus status);
+
     List<ToolResponseDto> findByUserId(Long userId);
 
-    @Query("SELECT tool FROM Tool tool WHERE tool.title = ?1")
-    Optional<Tool> findByName(String toolName);
+    void deleteById(Long toolId);
 
 }
 

@@ -26,17 +26,19 @@ public class ToolServiceImpl implements ToolService {
                 .map(tool -> mapper.map(tool, ToolResponseDto.class)).toList();
     }
 
+//   ===================================
 //    @Override
 //    public List<ToolResponseDto> getToolsByStatus(ToolsAvailabilityStatus status) {
 //        if(status == null) {
 //            return getAllTools();
 //        } else {
-//            List<Tool> toolBystatus = toolRepository.findByStatus(status);
-//            return toolBystatus.stream()
+//            List<Tool> toolByStatus = toolRepository.findByStatus(status);
+//            return toolByStatus.stream()
 //                    .map(tool -> mapper.map(tool, ToolResponseDto.class))
 //                    .toList();
 //        }
 //    }
+//   ===================================
 
     @Override
     public ToolResponseDto addNewTool(ToolRequestDto dto) {
@@ -57,22 +59,25 @@ public class ToolServiceImpl implements ToolService {
     @Override
     @Transactional
     public ToolResponseDto setToolStatus(Long toolId, ToolsAvailabilityStatus status) {
-        String exceptionMessage = "Failed to change availability status of the tool. Product ID %d not found";
-        Tool tool = toolRepository.findById(toolId).orElseThrow(() -> new NotFoundException(String.format(exceptionMessage, toolId)));
+        String exceptionMessage = "Failed to change availability status of the tool. Tool ID %d not found";
+        Tool tool = toolRepository.findById(toolId)
+                .orElseThrow(() -> new NotFoundException(String.format(exceptionMessage, toolId)));
         tool.setStatus(status);
         tool = toolRepository.save(tool);
         return mapper.map(tool, ToolResponseDto.class);
     }
 
-
-//    @Override
-//    public ToolResponseDto deleteTool(Long toolId) {
-//        return null;
-//    }
-
-
     @Override
     public List<ToolResponseDto> getAllToolsByUser(Long userId) {
         return toolRepository.findByUserId(userId);
+    }
+
+    @Override
+    public ToolResponseDto deleteTool(Long toolId) {
+        String exceptionMessage = "Failed to delete tool. Tool ID %d not found";
+        Tool tool = toolRepository.findById(toolId)
+                .orElseThrow(() -> new NotFoundException(String.format(exceptionMessage, toolId)));
+        toolRepository.deleteById(toolId);
+        return mapper.map(tool, ToolResponseDto.class);
     }
 }
