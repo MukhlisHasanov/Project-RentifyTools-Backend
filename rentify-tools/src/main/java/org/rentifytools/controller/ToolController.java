@@ -22,10 +22,15 @@ public class ToolController {
         return toolService.getAllTools();
     }
 
+
+
 //    @GetMapping()
 //    public List<ToolResponseDto> getToolsByStatus(@RequestParam(name = "status", required = false) ToolsAvailabilityStatus status) {
 //        return toolService.getToolsByStatus(status);
 //    }
+
+
+
 
     @PostMapping
     public ToolResponseDto addTool(@RequestBody ToolRequestDto dto) {
@@ -43,6 +48,12 @@ public class ToolController {
     public ToolResponseDto setToolStatus(@PathVariable(name = "toolId") Long toolId,
                                          @RequestParam(name = "status", required = true,  defaultValue = "AVAILABLE") ToolsAvailabilityStatus status) {
         return toolService.setToolStatus(toolId, status);
+    }
+
+    @Operation(summary = "Removing a tool from the list")
+    @DeleteMapping("{toolId}")
+    public ToolResponseDto deleteTool(@PathVariable(name = "toolId") Long toolId) {
+        return toolService.deleteTool(toolId);
     }
 
 }
