@@ -36,6 +36,7 @@ public class SecurityConfiguration {
 
         return http.build();
     }
+
 //    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 //        http
 //                .csrf(AbstractHttpConfigurer::disable)
@@ -53,6 +54,7 @@ public class SecurityConfiguration {
 //                                .requestMatchers(HttpMethod.GET, "/api/tools").permitAll()
 //                                .requestMatchers(HttpMethod.POST, "/api/tools").hasAnyRole("USER","ADMIN")
 //                                .requestMatchers(HttpMethod.PUT, "/api/tools/{toolId}").hasAnyRole("USER","ADMIN")
+//                                .requestMatchers(HttpMethod.PATCH, "/api/tools/{toolId}").hasAnyRole("USER","ADMIN")
 //                                .requestMatchers(HttpMethod.DELETE,"/api/tools/{toolId}").hasAnyRole("USER","ADMIN")
 //                                .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/refresh").permitAll()
 //                                .anyRequest().authenticated())
