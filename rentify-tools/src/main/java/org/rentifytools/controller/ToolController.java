@@ -22,7 +22,11 @@ public class ToolController {
         return toolService.getAllTools();
     }
 
-
+    @Operation(summary = "Getting tool by Id")
+    @GetMapping("/{toolId}")
+    public ToolResponseDto getToolById(@PathVariable(name = "toolId") Long toolId) {
+        return toolService.getToolById(toolId);
+    }
 
 //    @GetMapping()
 //    public List<ToolResponseDto> getToolsByStatus(@RequestParam(name = "status", required = false) ToolsAvailabilityStatus status) {

@@ -26,6 +26,18 @@ public class ToolServiceImpl implements ToolService {
                 .map(tool -> mapper.map(tool, ToolResponseDto.class)).toList();
     }
 
+    @Override
+    public ToolResponseDto getToolById(Long toolId) {
+        return mapper.map(findToolById(toolId), ToolResponseDto.class);
+    }
+
+    @Override
+    public Tool findToolById(Long toolId) {
+        String exceptionMessage = "Tool ID %d not found";
+        return toolRepository.findById(toolId)
+                .orElseThrow(() -> new NotFoundException(String.format(exceptionMessage, toolId)));
+    }
+
 //   ===================================
 //    @Override
 //    public List<ToolResponseDto> getToolsByStatus(ToolsAvailabilityStatus status) {
