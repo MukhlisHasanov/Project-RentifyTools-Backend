@@ -12,6 +12,7 @@ public interface ToolService {
 
     ToolResponseDto getToolById(Long toolId);
     Tool findToolById(Long toolId);
+    List<ToolResponseDto> getToolsByTitle(String toolName);
 
     ToolResponseDto addNewTool(ToolRequestDto tool);
 
@@ -21,8 +22,7 @@ public interface ToolService {
 //   ===================================
 //    List<ToolResponseDto> getToolsByStatus(ToolsAvailabilityStatus status);
 //   ===================================
-
-    List<ToolResponseDto> getAllToolsByUser(Long userId);
+//    List<ToolResponseDto> getAllToolsByUser(Long userId);
 
     ToolResponseDto deleteTool(Long toolId);
 }

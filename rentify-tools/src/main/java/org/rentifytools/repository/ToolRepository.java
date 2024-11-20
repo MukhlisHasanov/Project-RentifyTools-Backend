@@ -17,7 +17,7 @@ public interface ToolRepository extends JpaRepository<Tool, Long>{
     List<Tool> findByTitleContaining(String title);
     List<Tool> findByTitleAndStatus(String title, ToolsAvailabilityStatus status);
     List<Tool> findByStatus(ToolsAvailabilityStatus status);
-    List<ToolResponseDto> findByUserId(Long userId);
+//    List<ToolResponseDto> findByUserId(Long userId);
 
     void deleteById(Long toolId);
 

@@ -22,10 +22,16 @@ public class ToolController {
         return toolService.getAllTools();
     }
 
-    @Operation(summary = "Getting tool by Id")
-    @GetMapping("/{toolId}")
+    @Operation(summary = "Getting tool by id")
+    @GetMapping("/find/{toolId}")
     public ToolResponseDto getToolById(@PathVariable(name = "toolId") Long toolId) {
         return toolService.getToolById(toolId);
+    }
+
+    @Operation(summary = "Getting tool by name")
+    @GetMapping("/find/{toolName}")
+    public List<ToolResponseDto> getToolByTitle(@PathVariable(name = "toolName") String toolTitle) {
+        return toolService.getToolsByTitle(toolTitle);
     }
 
 //    @GetMapping()
@@ -42,13 +48,13 @@ public class ToolController {
     }
 
     @Operation(summary = "Editing tool information")
-    @PutMapping("{toolId}")
+    @PutMapping("/edit/{toolId}")
     public ToolResponseDto editTool(@PathVariable(name = "toolId") Long toolId, @RequestBody ToolRequestDto dto) {
         return toolService.updateTool(toolId, dto);
     }
 
     @Operation(summary = "Changing the availability status of the tool")
-    @PatchMapping("{toolId}")
+    @PatchMapping("/status/{toolId}")
     public ToolResponseDto setToolStatus(@PathVariable(name = "toolId") Long toolId,
                                          @RequestParam(name = "status", required = true,  defaultValue = "AVAILABLE") ToolsAvailabilityStatus status) {
         return toolService.setToolStatus(toolId, status);
