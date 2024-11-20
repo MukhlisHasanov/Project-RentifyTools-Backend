@@ -31,7 +31,6 @@ public class ToolServiceImpl implements ToolService {
         return mapper.map(findToolById(toolId), ToolResponseDto.class);
     }
 
-    @Override
     public Tool findToolById(Long toolId) {
         String exceptionMessage = "Tool ID %d not found";
         return toolRepository.findById(toolId)
@@ -41,6 +40,13 @@ public class ToolServiceImpl implements ToolService {
     @Override
     public List<ToolResponseDto> getToolsByTitle(String toolName) {
         return toolRepository.findByTitle(toolName).stream()
+                .map(tool -> mapper.map(tool, ToolResponseDto.class))
+                .toList();
+    }
+
+    @Override
+    public List<ToolResponseDto> getByTitleContaining(String toolName) {
+        return toolRepository.findByTitleContaining(toolName).stream()
                 .map(tool -> mapper.map(tool, ToolResponseDto.class))
                 .toList();
     }

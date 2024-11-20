@@ -17,29 +17,35 @@ public class ToolController {
 
     private final ToolService toolService;
 
-    @GetMapping()
+    @GetMapping
     public List<ToolResponseDto> getAllTools() {
         return toolService.getAllTools();
     }
 
     @Operation(summary = "Getting tool by id")
-    @GetMapping("/find/{toolId}")
+    @GetMapping("/findById/{toolId}")
     public ToolResponseDto getToolById(@PathVariable(name = "toolId") Long toolId) {
         return toolService.getToolById(toolId);
     }
 
-    @Operation(summary = "Getting tool by name")
-    @GetMapping("/find/{toolName}")
+    @Operation(summary = "Getting tools by name")
+    @GetMapping("/findByName/{toolName}")
     public List<ToolResponseDto> getToolByTitle(@PathVariable(name = "toolName") String toolTitle) {
         return toolService.getToolsByTitle(toolTitle);
     }
 
+    @Operation(summary = "Getting tools by name")
+    @GetMapping("/findAllByName/{toolName}")
+    public List<ToolResponseDto> getTitleIfContains(@PathVariable(name = "toolName") String toolTitle) {
+        return toolService.getByTitleContaining(toolTitle);
+    }
+
+
+//    @Operation(summary = "Getting tools by status")
 //    @GetMapping()
 //    public List<ToolResponseDto> getToolsByStatus(@RequestParam(name = "status", required = false) ToolsAvailabilityStatus status) {
 //        return toolService.getToolsByStatus(status);
 //    }
-
-
 
 
     @PostMapping
