@@ -26,6 +26,31 @@ public class ToolServiceImpl implements ToolService {
                 .map(tool -> mapper.map(tool, ToolResponseDto.class)).toList();
     }
 
+    @Override
+    public ToolResponseDto getToolById(Long toolId) {
+        return mapper.map(findToolById(toolId), ToolResponseDto.class);
+    }
+
+    public Tool findToolById(Long toolId) {
+        String exceptionMessage = "Tool ID %d not found";
+        return toolRepository.findById(toolId)
+                .orElseThrow(() -> new NotFoundException(String.format(exceptionMessage, toolId)));
+    }
+
+    @Override
+    public List<ToolResponseDto> getToolsByTitle(String toolName) {
+        return toolRepository.findByTitle(toolName).stream()
+                .map(tool -> mapper.map(tool, ToolResponseDto.class))
+                .toList();
+    }
+
+    @Override
+    public List<ToolResponseDto> getByTitleContaining(String toolName) {
+        return toolRepository.findByTitleContaining(toolName).stream()
+                .map(tool -> mapper.map(tool, ToolResponseDto.class))
+                .toList();
+    }
+
 //   ===================================
 //    @Override
 //    public List<ToolResponseDto> getToolsByStatus(ToolsAvailabilityStatus status) {
@@ -39,6 +64,12 @@ public class ToolServiceImpl implements ToolService {
 //        }
 //    }
 //   ===================================
+
+    //    @Override
+//    public List<ToolResponseDto> getAllToolsByUser(Long userId) {
+//        return toolRepository.findByUserId(userId);
+//    }
+
 
     @Override
     public ToolResponseDto addNewTool(ToolRequestDto dto) {
@@ -65,11 +96,6 @@ public class ToolServiceImpl implements ToolService {
         tool.setStatus(status);
         tool = toolRepository.save(tool);
         return mapper.map(tool, ToolResponseDto.class);
-    }
-
-    @Override
-    public List<ToolResponseDto> getAllToolsByUser(Long userId) {
-        return toolRepository.findByUserId(userId);
     }
 
     @Override

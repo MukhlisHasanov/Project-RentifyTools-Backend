@@ -17,19 +17,35 @@ public class ToolController {
 
     private final ToolService toolService;
 
-    @GetMapping()
+    @GetMapping
     public List<ToolResponseDto> getAllTools() {
         return toolService.getAllTools();
     }
 
+    @Operation(summary = "Getting tool by id")
+    @GetMapping("/findById/{toolId}")
+    public ToolResponseDto getToolById(@PathVariable(name = "toolId") Long toolId) {
+        return toolService.getToolById(toolId);
+    }
+
+    @Operation(summary = "Getting tools by name")
+    @GetMapping("/findByName/{toolName}")
+    public List<ToolResponseDto> getToolByTitle(@PathVariable(name = "toolName") String toolTitle) {
+        return toolService.getToolsByTitle(toolTitle);
+    }
+
+    @Operation(summary = "Getting tools by name")
+    @GetMapping("/findAllByName/{toolName}")
+    public List<ToolResponseDto> getTitleIfContains(@PathVariable(name = "toolName") String toolTitle) {
+        return toolService.getByTitleContaining(toolTitle);
+    }
 
 
+//    @Operation(summary = "Getting tools by status")
 //    @GetMapping()
 //    public List<ToolResponseDto> getToolsByStatus(@RequestParam(name = "status", required = false) ToolsAvailabilityStatus status) {
 //        return toolService.getToolsByStatus(status);
 //    }
-
-
 
 
     @PostMapping
@@ -38,13 +54,13 @@ public class ToolController {
     }
 
     @Operation(summary = "Editing tool information")
-    @PutMapping("{toolId}")
+    @PutMapping("/edit/{toolId}")
     public ToolResponseDto editTool(@PathVariable(name = "toolId") Long toolId, @RequestBody ToolRequestDto dto) {
         return toolService.updateTool(toolId, dto);
     }
 
     @Operation(summary = "Changing the availability status of the tool")
-    @PatchMapping("{toolId}")
+    @PatchMapping("/status/{toolId}")
     public ToolResponseDto setToolStatus(@PathVariable(name = "toolId") Long toolId,
                                          @RequestParam(name = "status", required = true,  defaultValue = "AVAILABLE") ToolsAvailabilityStatus status) {
         return toolService.setToolStatus(toolId, status);
