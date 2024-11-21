@@ -10,6 +10,7 @@ import org.rentifytools.entity.User;
 import org.rentifytools.exception.DuplicateEmailException;
 import org.rentifytools.exception.NotFoundException;
 import org.rentifytools.repository.UserRepository;
+import org.rentifytools.security.utils.SecurityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 

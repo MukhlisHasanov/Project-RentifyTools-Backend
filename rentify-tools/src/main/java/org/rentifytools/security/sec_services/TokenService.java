@@ -50,6 +50,7 @@ public class TokenService {
         return Jwts.builder()
                 .subject(userDetails.getUsername())
                 .expiration(expirationDate)
+                .claim("userId",userDetails.getUserId())
                 .claim("roles", roles)
                 .claim("email", userDetails.getUsername())
                 .signWith(accessKey)
@@ -111,8 +112,8 @@ public class TokenService {
     }
 
     public AuthInfo mapClaimsToAuthInfo(Claims claims) {
-        String username = claims.getSubject();
-
+        String email = claims.getSubject();
+        Long userId = claims.get("userId", Long.class);
         List<String> rolesList = (List<String>) claims.get("roles");
 
         Set<Role> roles = new HashSet<>();
@@ -125,7 +126,7 @@ public class TokenService {
                 }
             }
         }
-        return new AuthInfo(username, roles);
+        return new AuthInfo(email, roles, userId);
     }
 
 }
