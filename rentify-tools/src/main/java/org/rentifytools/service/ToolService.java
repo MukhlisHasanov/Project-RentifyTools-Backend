@@ -8,11 +8,13 @@ import org.rentifytools.enums.ToolsAvailabilityStatus;
 import java.util.List;
 
 public interface ToolService {
+
     List<ToolResponseDto> getAllTools();
 
     ToolResponseDto getToolById(Long toolId);
 
     List<ToolResponseDto> getToolsByTitle(String toolName);
+
     List<ToolResponseDto> getByTitleContaining(String toolName);
 
     ToolResponseDto addNewTool(ToolRequestDto tool);
