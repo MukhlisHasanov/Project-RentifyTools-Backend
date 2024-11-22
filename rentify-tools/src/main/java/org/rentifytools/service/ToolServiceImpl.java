@@ -5,20 +5,28 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.rentifytools.dto.toolDto.ToolRequestDto;
 import org.rentifytools.dto.toolDto.ToolResponseDto;
+import org.rentifytools.dto.userDto.UserResponseDto;
 import org.rentifytools.entity.Tool;
+import org.rentifytools.entity.User;
 import org.rentifytools.enums.ToolsAvailabilityStatus;
 import org.rentifytools.exception.NotFoundException;
 import org.rentifytools.repository.ToolRepository;
+import org.rentifytools.repository.UserRepository;
+import org.rentifytools.security.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ToolServiceImpl implements ToolService {
 
     private final ToolRepository toolRepository;
+    private final UserService userService;
     private final ModelMapper mapper;
+    private final UserRepository userRepository;
+    private final UserServiceImpl userServiceImpl;
 
     @Override
     public List<ToolResponseDto> getAllTools() {
@@ -51,29 +59,16 @@ public class ToolServiceImpl implements ToolService {
                 .toList();
     }
 
-//   ===================================
-//    @Override
-//    public List<ToolResponseDto> getToolsByStatus(ToolsAvailabilityStatus status) {
-//        if(status == null) {
-//            return getAllTools();
-//        } else {
-//            List<Tool> toolByStatus = toolRepository.findByStatus(status);
-//            return toolByStatus.stream()
-//                    .map(tool -> mapper.map(tool, ToolResponseDto.class))
-//                    .toList();
-//        }
-//    }
-//   ===================================
-
-    //    @Override
-//    public List<ToolResponseDto> getAllToolsByUser(Long userId) {
-//        return toolRepository.findByUserId(userId);
-//    }
-
-
+    // Метод пока не работает. Мы не подтягиваем User id и не передаем его в Tool. Нужно доделать!!!
     @Override
     public ToolResponseDto addNewTool(ToolRequestDto dto) {
+        String exceptionMessage = "User with ID %d not found";
         Tool tool = mapper.map(dto, Tool.class);
+
+        Long userId = SecurityUtils.getCurrentUserId();
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException(String.format(exceptionMessage, userId)));
+        tool.setUser(user);
+
         tool = toolRepository.save(tool);
         return mapper.map(tool, ToolResponseDto.class);
     }
@@ -106,4 +101,22 @@ public class ToolServiceImpl implements ToolService {
         toolRepository.deleteById(toolId);
         return mapper.map(tool, ToolResponseDto.class);
     }
+
+//    ===================================
+//    @Override
+//    public List<ToolResponseDto> getToolsByStatus(ToolsAvailabilityStatus status) {
+//        if(status == null) {
+//            return getAllTools();
+//        } else {
+//            List<Tool> toolByStatus = toolRepository.findByStatus(status);
+//            return toolByStatus.stream()
+//                    .map(tool -> mapper.map(tool, ToolResponseDto.class))
+//                    .toList();
+//        }
+//    }
+//   ===================================
+//    @Override
+//    public List<ToolResponseDto> getAllToolsByUser(Long userId) {
+//        return toolRepository.findByUserId(userId);
+//    }
 }
