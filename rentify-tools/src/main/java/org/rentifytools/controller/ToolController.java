@@ -1,15 +1,19 @@
 package org.rentifytools.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.rentifytools.dto.toolDto.ToolRequestDto;
 import org.rentifytools.dto.toolDto.ToolResponseDto;
 import org.rentifytools.enums.ToolsAvailabilityStatus;
 import org.rentifytools.service.ToolService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Tool API", description = "Methods for working with tools")
 @RestController
 @RequestMapping("/api/tools")
 @RequiredArgsConstructor
@@ -19,8 +23,12 @@ public class ToolController {
 
     @Operation(summary = "Getting all tools from DB")
     @GetMapping
-    public List<ToolResponseDto> getAllTools() {
-        return toolService.getAllTools();
+    public ResponseEntity<List<ToolResponseDto>> getAllTools() {
+        List<ToolResponseDto> tools = toolService.getAllTools();
+        if (tools.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(tools, HttpStatus.OK);
     }
 
     @Operation(summary = "Getting tool by id")
@@ -48,15 +56,15 @@ public class ToolController {
 //        return toolService.getToolsByStatus(status);
 //    }
 
-
+    @Operation(summary = "Adding new tool to the list")
     @PostMapping
-    public ToolResponseDto addTool(@RequestBody ToolRequestDto dto) {
-        return toolService.addNewTool(dto);
+    public ResponseEntity<ToolResponseDto> addTool(@RequestBody ToolRequestDto dto) {
+        return new ResponseEntity<>(toolService.addNewTool(dto), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Editing tool information")
     @PutMapping("/{toolId}")
-    public ToolResponseDto editTool(@PathVariable(name = "toolId") Long toolId, @RequestBody ToolRequestDto dto) {
+    public ToolResponseDto updateTool(@PathVariable(name = "toolId") Long toolId, @RequestBody ToolRequestDto dto) {
         return toolService.updateTool(toolId, dto);
     }
 

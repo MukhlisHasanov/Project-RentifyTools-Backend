@@ -10,7 +10,6 @@ import org.rentifytools.entity.User;
 import org.rentifytools.exception.DuplicateEmailException;
 import org.rentifytools.exception.NotFoundException;
 import org.rentifytools.repository.UserRepository;
-import org.rentifytools.security.utils.SecurityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,15 +24,6 @@ public class UserServiceImpl implements UserService{
     private final RoleService roleService;
     private final BCryptPasswordEncoder encoder;
     private final ModelMapper mapper;
-
-//    @Override
-//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//
-//        User user = repository.findByEmail(email)
-//                .orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " not found"));
-//
-//        return new CustomUserDetails(user);
-//    }
 
     @Override
     @Transactional
@@ -56,6 +46,26 @@ public class UserServiceImpl implements UserService{
                 .build();
         User savedUser = repository.save(user);
         return mapper.map(savedUser, UserResponseDto.class);
+    }
+
+    @Override
+    @Transactional
+    public UserResponseDto updateUser(Long id, UserRequestDto dto) {
+        User foundUser = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User with ID " + id + " not found"));
+        repository.findByEmail(dto.getEmail())
+                .ifPresent(user -> {throw new DuplicateEmailException(dto.getEmail());
+                });
+        if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
+            String encodedPass = encoder.encode(dto.getPassword());
+            foundUser.setPassword(encodedPass);
+        }
+        foundUser.setFirstName(dto.getFirstname());
+        foundUser.setLastName(dto.getLastname());
+        foundUser.setEmail(dto.getEmail());
+        foundUser.setPhone(dto.getPhone());
+
+        return mapper.map(repository.save(foundUser), UserResponseDto.class);
     }
 
     @Override

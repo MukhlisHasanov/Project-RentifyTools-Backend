@@ -23,7 +23,7 @@ public class UserController {
 
     @Operation(summary = "Getting a list of all users")
     @GetMapping
-    public ResponseEntity<List<UserResponseDto>> getUsers() {
+    public ResponseEntity<List<UserResponseDto>> getAllUsers() {
         List<UserResponseDto> users = service.getAllUsers();
         if (users.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -32,8 +32,8 @@ public class UserController {
     }
 
     @Operation(summary = "Getting user by Id")
-    @GetMapping("/{id}")
-    public UserResponseDto getUser(@PathVariable (name = "id") Long id) {
+    @GetMapping("/{userId}")
+    public UserResponseDto getUserById(@PathVariable (name = "userId") Long id) {
         return service.getUserById(id);
     }
 
@@ -41,6 +41,11 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserResponseDto> createUser(@Valid @RequestBody UserRequestDto user) {
         return new ResponseEntity<>(service.createUser(user), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable (name = "userId") Long userId, @Valid @RequestBody UserRequestDto userDto) {
+        return new ResponseEntity<>(service.updateUser(userId, userDto), HttpStatus.OK);
     }
 
     @Operation(summary = "Assign a new role for user")
