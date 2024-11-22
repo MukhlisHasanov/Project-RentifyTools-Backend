@@ -6,12 +6,16 @@ import org.modelmapper.ModelMapper;
 import org.rentifytools.dto.toolDto.ToolRequestDto;
 import org.rentifytools.dto.toolDto.ToolResponseDto;
 import org.rentifytools.entity.Tool;
+import org.rentifytools.entity.User;
 import org.rentifytools.enums.ToolsAvailabilityStatus;
 import org.rentifytools.exception.NotFoundException;
 import org.rentifytools.repository.ToolRepository;
+import org.rentifytools.repository.UserRepository;
+import org.rentifytools.security.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +23,7 @@ public class ToolServiceImpl implements ToolService {
 
     private final ToolRepository toolRepository;
     private final ModelMapper mapper;
-
+    private final UserRepository userRepository;
     @Override
     public List<ToolResponseDto> getAllTools() {
         return toolRepository.findAll().stream()
@@ -74,6 +78,10 @@ public class ToolServiceImpl implements ToolService {
     @Override
     public ToolResponseDto addNewTool(ToolRequestDto dto) {
         Tool tool = mapper.map(dto, Tool.class);
+        Long userId = SecurityUtils.getCurrentUserId();
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("User with ID " + userId + " not found"));
+        tool.setUser(user);
         tool = toolRepository.save(tool);
         return mapper.map(tool, ToolResponseDto.class);
     }

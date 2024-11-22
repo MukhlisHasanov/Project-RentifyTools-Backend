@@ -35,7 +35,7 @@ public class UserRequestDto {
 
     @NotBlank
     @Pattern(
-            regexp = "^(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*().])[A-Za-z\\d!@#$%^&*()]{5,15}$",
+            regexp = "^(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*().])[A-Za-z\\d!@#$%^&*().]{5,15}$",
             message = "Password must be 5-15 characters long, contain at least one uppercase letter and one digit")
     @Schema(description = "User password", example = "john1234")
     private String password;
