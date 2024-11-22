@@ -1,0 +1,258 @@
+[33mcommit dd76a9e40167f9bc10ca20d45db28bfc8748714b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mValerian[m[33m)[m
+Author: varaan785@gmail.com <156232089+Varaan785@users.noreply.github.com>
+Date:   Tue Nov 19 13:17:05 2024 +0100
+
+    add RentController
+
+[33mcommit 71f59d97ecd18fa313f23e7aee56ba1260545b1a[m
+Merge: 50b82a4 4aec0d3
+Author: varaan785@gmail.com <156232089+Varaan785@users.noreply.github.com>
+Date:   Mon Nov 18 22:10:45 2024 +0100
+
+    171124
+
+[33mcommit 4aec0d3d1db14b3a4efd9202604f076ec484958a[m[33m ([m[1;31morigin/dev[m[33m, [m[1;31morigin/andrey_the_best[m[33m)[m
+Merge: 3b081c7 95ae0c0
+Author: AndreyHein <soly.a@web.de>
+Date:   Mon Nov 18 19:37:01 2024 +0100
+
+    Merge branch 'dev' of https://github.com/MukhlisHasanov/Project-RentifyTools-Backend into dev
+
+[33mcommit 3b081c7a042f39ca759fd3c5ed4fdfa9a1cb6230[m
+Author: AndreyHein <soly.a@web.de>
+Date:   Mon Nov 18 19:35:38 2024 +0100
+
+    add congig CorsConfig
+
+[33mcommit 95ae0c080e8312901316273a71e1961b3519da77[m[33m ([m[1;32mdev[m[33m)[m
+Merge: 0385935 a0bedcf
+Author: Anton Gorbovyi <150452319+AGorbovyi@users.noreply.github.com>
+Date:   Mon Nov 18 02:09:41 2024 +0100
+
+    Merge pull request #24 from MukhlisHasanov/AntonG
+    
+    delete tool, change in DB settings, adding security config
+
+[33mcommit a0bedcf1ddf5c1767296671c1ca3d3d8028474c2[m
+Author: AGorbovyi <anton.gorbovyi@gmail.com>
+Date:   Mon Nov 18 02:08:47 2024 +0100
+
+    delete tool, change in DB settings, adding security config
+
+[33mcommit 50b82a49711ab0c6d082aadf47a3ecebb422d905[m[33m ([m[1;32mValerianMyV0.0.2[m[33m, [m[1;32mValerianMyV0.0.1[m[33m)[m
+Merge: 35a9504 0385935
+Author: varaan785@gmail.com <156232089+Varaan785@users.noreply.github.com>
+Date:   Mon Nov 18 00:31:17 2024 +0100
+
+    151124
+
+[33mcommit 038593572d06580966a5007703e6fce3530c5188[m
+Merge: 14f9351 631b97f
+Author: Anton Gorbovyi <150452319+AGorbovyi@users.noreply.github.com>
+Date:   Sun Nov 17 22:35:29 2024 +0100
+
+    Merge pull request #23 from MukhlisHasanov/AntonG
+    
+    Anton g
+
+[33mcommit 631b97f7aa70a093253d59705207909909916c0f[m
+Author: AGorbovyi <anton.gorbovyi@gmail.com>
+Date:   Sun Nov 17 22:34:09 2024 +0100
+
+    new updates
+
+[33mcommit 5b4ee97da3f3ab8cc9b34cdb3eefb10076061f45[m
+Merge: ec8b9ae 14f9351
+Author: Anton Gorbovyi <150452319+AGorbovyi@users.noreply.github.com>
+Date:   Sun Nov 17 21:55:23 2024 +0100
+
+    Merge pull request #22 from MukhlisHasanov/dev
+    
+    Dev
+
+[33mcommit 14f935141ecbe08cdc70d793849c665660a15d29[m
+Merge: f8f2783 ec8b9ae
+Author: Anton Gorbovyi <150452319+AGorbovyi@users.noreply.github.com>
+Date:   Sun Nov 17 21:39:59 2024 +0100
+
+    Merge pull request #20 from MukhlisHasanov/AntonG
+    
+    tool connected to user
+
+[33mcommit ec8b9ae34716ea5663415bb02bff054dd5d5b7df[m
+Author: AGorbovyi <anton.gorbovyi@gmail.com>
+Date:   Sun Nov 17 21:38:16 2024 +0100
+
+    tool connected to user
+
+[33mcommit f8f27833b0242cbca7902ac4025ba6da8a7fee9f[m
+Author: AndreyHein <soly.a@web.de>
+Date:   Sun Nov 17 20:44:06 2024 +0100
+
+    Update User.java
+
+[33mcommit cf9837f558b64e41530011d87202189c49b973d8[m
+Author: Anton Gorbovyi <150452319+AGorbovyi@users.noreply.github.com>
+Date:   Sun Nov 17 17:43:10 2024 +0100
+
+    Create application.properties
+
+[33mcommit 4b0031d331abd4940e4c94fe4aa4240897c3a3ba[m
+Author: Anton Gorbovyi <150452319+AGorbovyi@users.noreply.github.com>
+Date:   Sun Nov 17 17:28:19 2024 +0100
+
+    Update ToolResponseDto.java
+    
+    change Integer to Double for price
+
+[33mcommit aab49b1520033306d190ac16a59d9d586fcf3641[m
+Author: Anton Gorbovyi <150452319+AGorbovyi@users.noreply.github.com>
+Date:   Sun Nov 17 17:27:53 2024 +0100
+
+    Update ToolRequestDto.java
+    
+    change Integer to Double for price
+
+[33mcommit 2b1664c5553124e8b98b2b596ad7ee7aeeb5df89[m
+Author: Anton Gorbovyi <150452319+AGorbovyi@users.noreply.github.com>
+Date:   Sun Nov 17 17:27:04 2024 +0100
+
+    Update Tool.java
+    
+    change Integer to Double for price
+
+[33mcommit 35a95042f4e5faac99a338689b5bb970c7781a19[m
+Merge: 5157355 298c842
+Author: varaan785@gmail.com <156232089+Varaan785@users.noreply.github.com>
+Date:   Sun Nov 17 14:57:21 2024 +0100
+
+    Merge remote-tracking branch 'origin/dev' into Valerian
+
+[33mcommit 298c842c6faf8d8889f0dcdeb0ea743d7f869b73[m
+Merge: dc03310 ef98c19
+Author: Andrey Hein <156939090+AndreyHein@users.noreply.github.com>
+Date:   Sun Nov 17 13:24:56 2024 +0100
+
+    Merge pull request #18 from MukhlisHasanov/security
+    
+    Security
+
+[33mcommit ef98c190beecd286438423f593ad60d0fff6a750[m
+Author: AndreyHein <soly.a@web.de>
+Date:   Sun Nov 17 13:23:25 2024 +0100
+
+    Update security, add accessToken
+
+[33mcommit 5157355937a6e872ee92a607c0aa9ee1573dca2a[m
+Merge: 94bcc2e dc03310
+Author: varaan785@gmail.com <156232089+Varaan785@users.noreply.github.com>
+Date:   Sat Nov 16 20:16:59 2024 +0100
+
+    Merge remote-tracking branch 'origin/dev' into Valerian
+
+[33mcommit 65feed4d6a8044aae02f3c20ad86b5eca3fdd6a5[m
+Author: AndreyHein <soly.a@web.de>
+Date:   Sat Nov 16 11:39:41 2024 +0100
+
+    Reapply "Merge branch 'dev' into security"
+    
+    This reverts commit 31c133020e9e5f4af4582e1c8fec974752b736dd.
+
+[33mcommit 31c133020e9e5f4af4582e1c8fec974752b736dd[m
+Author: AndreyHein <soly.a@web.de>
+Date:   Sat Nov 16 11:01:59 2024 +0100
+
+    Revert "Merge branch 'dev' into security"
+    
+    This reverts commit aa740ed37d7f3d214e3485317c0cbe42e1dec021, reversing
+    changes made to 47e7216e56096b7984bfc930b021b47078d2c277.
+
+[33mcommit 21015a24dbc479ced008f0860202d6d514499dff[m
+Author: AndreyHein <soly.a@web.de>
+Date:   Fri Nov 15 21:23:34 2024 +0100
+
+    update security
+
+[33mcommit cfd03ba30dc150c9d141a1f909f791667d2177c6[m
+Author: AndreyHein <soly.a@web.de>
+Date:   Tue Nov 12 21:05:23 2024 +0100
+
+    authentikation classes
+
+[33mcommit dc03310dac8434a21f27fee98c30a6639d9b9b2f[m
+Author: AndreyHein <soly.a@web.de>
+Date:   Sat Nov 16 10:25:33 2024 +0100
+
+    change application.yaml
+
+[33mcommit 6a0499c4662de7bbc59188b05f6ac72b1093f33b[m
+Merge: f496559 ec94faa
+Author: Anton Gorbovyi <150452319+AGorbovyi@users.noreply.github.com>
+Date:   Sat Nov 16 02:22:33 2024 +0100
+
+    Merge pull request #16 from MukhlisHasanov/Anton
+    
+    Anton
+
+[33mcommit ec94faa6c40dcdbcef982bc00e22f71a4fe5863e[m
+Author: AGorbovyi <anton.gorbovyi@gmail.com>
+Date:   Sat Nov 16 02:21:03 2024 +0100
+
+    Tool DTO, service and controller updated, added security config file
+
+[33mcommit 4bcd1535131f2143668daa706abcf476522dd147[m
+Merge: 076baca 210d7d6
+Author: AGorbovyi <anton.gorbovyi@gmail.com>
+Date:   Sat Nov 16 00:16:22 2024 +0100
+
+    Merge branch 'Anton' of github.com:MukhlisHasanov/Project-RentifyTools-Backend into Anton
+
+[33mcommit 076baca7417aa28f500e4259ab08dc193f74a3c7[m
+Author: AGorbovyi <anton.gorbovyi@gmail.com>
+Date:   Sat Nov 16 00:15:13 2024 +0100
+
+    new updates
+
+[33mcommit 210d7d62855bef0d0f7245afc682192c9d2971d6[m
+Merge: 1bec629 f496559
+Author: Anton Gorbovyi <150452319+AGorbovyi@users.noreply.github.com>
+Date:   Sat Nov 16 00:12:49 2024 +0100
+
+    Merge pull request #15 from MukhlisHasanov/dev
+    
+    Dev branch. Last updates
+
+[33mcommit 94bcc2e6824adf1e76963564b621f6fe4ca7ab92[m
+Author: varaan785@gmail.com <156232089+Varaan785@users.noreply.github.com>
+Date:   Fri Nov 15 19:24:06 2024 +0100
+
+    151124
+
+[33mcommit f496559edb428f9734d18085b686599d06f14bfe[m
+Merge: 08e4003 1bec629
+Author: Mukhlis Hasanov <156850672+MukhlisHasanov@users.noreply.github.com>
+Date:   Fri Nov 15 09:56:25 2024 +0400
+
+    Merge pull request #12 from MukhlisHasanov/Anton
+    
+    Tool Entity and GET request
+
+[33mcommit 1bec6291f78b84552c46ee14571bb9c1f6f99f36[m
+Author: AGorbovyi <anton.gorbovyi@gmail.com>
+Date:   Fri Nov 15 01:50:33 2024 +0100
+
+    PUT requests for tool entity
+
+[33mcommit 88dca49bb2788c0da31f1d8cd84ab69dd64dd911[m
+Author: AGorbovyi <anton.gorbovyi@gmail.com>
+Date:   Fri Nov 15 01:09:43 2024 +0100
+
+    PUT, DELETE, UPDATE requests for tool entity
+
+[33mcommit 226aa195e665bd40d85bb0f26eb06a473ae2b5f6[m
+Author: AGorbovyi <anton.gorbovyi@gmail.com>
+Date:   Thu Nov 14 17:59:35 2024 +0100
+
+    Tool Entity and get request
+
+[33mcommit 08e40038674142d908ef6f6c6622f8f0075f1d00[
