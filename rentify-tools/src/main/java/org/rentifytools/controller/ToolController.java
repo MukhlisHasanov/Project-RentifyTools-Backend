@@ -17,6 +17,7 @@ public class ToolController {
 
     private final ToolService toolService;
 
+    @Operation(summary = "Getting all tools from DB")
     @GetMapping
     public List<ToolResponseDto> getAllTools() {
         return toolService.getAllTools();
