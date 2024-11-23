@@ -41,7 +41,7 @@ public class AuthInfo implements Authentication {
 
     @Override
     public Object getPrincipal() {
-        return email;
+        return userId;
     }
 
     @Override
