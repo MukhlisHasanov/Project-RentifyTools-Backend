@@ -32,6 +32,15 @@ public class ToolController {
         return new ResponseEntity<>(tools, HttpStatus.OK);
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<List<ToolResponseDto>> getToolsByUserId() {
+        List<ToolResponseDto> tools = toolService.getAllToolsByUser();
+        if (tools.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(tools, HttpStatus.OK);
+    }
+
     @Operation(summary = "Getting tool by id")
     @GetMapping("/{toolId}")
     public ToolResponseDto getToolById(@PathVariable(name = "toolId") Long toolId) {
