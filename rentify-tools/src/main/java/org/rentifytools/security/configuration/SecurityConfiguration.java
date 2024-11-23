@@ -27,40 +27,43 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable()) // Отключаем CSRF защиту
-                .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll() // Разрешаем доступ ко всем запросам
-                );
-
-        return http.build();
-    }
-
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 //        http
-//                .csrf(AbstractHttpConfigurer::disable)
-//                .sessionManagement(x->x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .authorizeHttpRequests(
-//                        auth -> auth
-//                                .requestMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources",
-//                                        "/configuration/security", "/swagger-ui.html", "/webjars/**",
-//                                        "/swagger-resources/configuration/ui", "/swagger-ui.html").permitAll()
-//                                .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-//                                .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasAnyRole("USER","ADMIN")
-//                                .requestMatchers(HttpMethod.GET,"/api/users").permitAll()
-//                                .requestMatchers(HttpMethod.PATCH,"/api/users/{id}").hasRole("ADMIN")
-//                                .requestMatchers(HttpMethod.DELETE,"/api/users/{id}").hasRole("ADMIN")
-//                                .requestMatchers(HttpMethod.GET, "/api/tools").permitAll()
-//                                .requestMatchers(HttpMethod.POST, "/api/tools").hasAnyRole("USER","ADMIN")
-//                                .requestMatchers(HttpMethod.PUT, "/api/tools/{toolId}").hasAnyRole("USER","ADMIN")
-//                                .requestMatchers(HttpMethod.PATCH, "/api/tools/{toolId}").hasAnyRole("USER","ADMIN")
-//                                .requestMatchers(HttpMethod.DELETE,"/api/tools/{toolId}").hasAnyRole("USER","ADMIN")
-//                                .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/refresh").permitAll()
-//                                .anyRequest().authenticated())
-//                .httpBasic(AbstractHttpConfigurer::disable)
-//                .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class);
+//                .csrf(csrf -> csrf.disable()) // Отключаем CSRF защиту
+//                .authorizeHttpRequests(authorize -> authorize
+//                        .anyRequest().permitAll() // Разрешаем доступ ко всем запросам
+//                );
 //
 //        return http.build();
 //    }
+
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(x->x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(
+                        auth -> auth
+                                .requestMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources",
+                                        "/configuration/security", "/swagger-ui.html", "/webjars/**",
+                                        "/swagger-resources/configuration/ui", "/swagger-ui.html").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasAnyRole("USER","ADMIN")
+                                .requestMatchers(HttpMethod.GET,"/api/users").permitAll()
+                                .requestMatchers(HttpMethod.PATCH,"/api/users/{id}").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE,"/api/users/{id}").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/tools").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/api/tools/{toolId}").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/api/tools/me").hasAnyRole("USER","ADMIN")
+                                .requestMatchers(HttpMethod.GET,"/api/tools/search").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/tools").hasAnyRole("USER","ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/tools/{toolId}").hasAnyRole("USER","ADMIN")
+                                .requestMatchers(HttpMethod.PATCH, "/api/tools/{toolId}").hasAnyRole("USER","ADMIN")
+                                .requestMatchers(HttpMethod.DELETE,"/api/tools/{toolId}").hasAnyRole("USER","ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/refresh").permitAll()
+                                .anyRequest().authenticated())
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+    }
 }

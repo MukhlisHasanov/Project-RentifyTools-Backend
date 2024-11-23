@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.rentifytools.dto.roleDto.RoleResponseDto;
+import org.rentifytools.dto.toolDto.ToolResponseDto;
 
 import java.util.Set;
 

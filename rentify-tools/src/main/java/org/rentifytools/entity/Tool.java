@@ -1,9 +1,12 @@
 package org.rentifytools.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.rentifytools.enums.ToolsAvailabilityStatus;
+
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,6 +21,8 @@ public class Tool {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, updatable = false)
+    @JsonIgnore
 //    @JoinColumn(name = "userId", nullable = false, updatable = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

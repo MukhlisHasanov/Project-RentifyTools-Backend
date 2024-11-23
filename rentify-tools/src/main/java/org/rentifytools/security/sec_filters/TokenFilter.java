@@ -18,35 +18,51 @@ import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class TokenFilter extends GenericFilterBean {
+
     private final TokenService tokenService;
+
     @Override
-    public void doFilter(ServletRequest servletRequest,
-                         ServletResponse servletResponse,
-                         FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
+
         String authorizationHeader = request.getHeader("Authorization");
-        String token = (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) ? authorizationHeader.substring(7) : null;
+        String token = extractToken(authorizationHeader);
 
         if (token != null && tokenService.validateAccessToken(token)) {
             Claims claims = tokenService.getAccessClaims(token);
-            List<GrantedAuthority> authorities = claims.get("roles", List.class).stream()
-                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
-                    .toList();
-
-            UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(claims.getSubject(), null, authorities);
-
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-//            AuthInfo authInfo = tokenService.mapClaimsToAuthInfo(claims);
-//            authInfo.setAuthenticated(true);
-//            SecurityContextHolder.getContext().setAuthentication(authInfo);
+            setAuthentication(claims);
         }
+
         filterChain.doFilter(request, response);
+    }
+
+    private String extractToken(String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return authorizationHeader.substring(7);
+        }
+        return null;
+    }
+
+    private void setAuthentication(Claims claims) {
+        String userId = claims.getSubject();
+        List<String> roles = claims.get("roles", List.class);
+
+        List<GrantedAuthority> authorities = roles.stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                .collect(Collectors.toList());
+
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(userId, null, authorities);
+        authentication.setDetails(userId);
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }
