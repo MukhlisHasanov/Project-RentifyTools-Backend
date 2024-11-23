@@ -68,7 +68,7 @@ public class ToolController {
     }
 
     @Operation(summary = "Removing a tool from the list")
-    @DeleteMapping("{toolId}")
+    @DeleteMapping("/{toolId}")
     public ToolResponseDto deleteTool(@PathVariable(name = "toolId") Long toolId) {
         return toolService.deleteTool(toolId);
     }

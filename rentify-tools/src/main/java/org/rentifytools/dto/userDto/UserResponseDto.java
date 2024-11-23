@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.rentifytools.dto.roleDto.RoleResponseDto;
+import org.rentifytools.dto.toolDto.ToolResponseDto;
 
 import java.util.Set;
 
@@ -19,4 +20,5 @@ public class UserResponseDto {
     private String email;
     private String phone;
     private Set<RoleResponseDto> roles;
+    private Set<ToolResponseDto> tools;
 }
