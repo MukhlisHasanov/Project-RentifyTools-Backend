@@ -32,7 +32,7 @@ public class AuthService {
             refreshTokensStorage.put(email, refreshToken);
             return new TokenResponseDto(accessToken, refreshToken);
         } else {
-            throw new AuthException("Invalid username or password");
+            throw new AuthException("Invalid email or password");
         }
     }
 

@@ -13,11 +13,13 @@ import java.util.Set;
 public class AuthInfo implements Authentication {
     private String email;
     private Set<Role> roles;
+    private final Long userId;
     private boolean authenticated;
 
-    public AuthInfo(String email, Set<Role> roles) {
+    public AuthInfo(String email, Set<Role> roles, Long userId) {
         this.email = email;
         this.roles = roles;
+        this.userId = userId;
     }
 
     @Override
