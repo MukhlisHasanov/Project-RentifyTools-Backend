@@ -14,7 +14,7 @@ import org.rentifytools.enums.ToolsAvailabilityStatus;
 @Setter
 public class ToolResponseDto {
     private Long id;
-    private UserResponseDto user;
+//    private UserResponseDto user;
     private String title;
     private String description;
     private ToolsAvailabilityStatus status;
