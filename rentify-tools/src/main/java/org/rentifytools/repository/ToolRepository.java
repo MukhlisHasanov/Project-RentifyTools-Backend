@@ -13,6 +13,7 @@ import java.util.Optional;
 @Repository
 public interface ToolRepository extends JpaRepository<Tool, Long>{
 
+    List<Tool> findAllByUserId(Long userId);
     List<Tool> findByTitle(String title);
     List<Tool> findByTitleContaining(String title);
 //    List<Tool> findByTitleAndStatus(String title, ToolsAvailabilityStatus status);

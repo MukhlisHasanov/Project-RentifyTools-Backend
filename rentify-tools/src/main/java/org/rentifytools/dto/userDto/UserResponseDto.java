@@ -20,5 +20,4 @@ public class UserResponseDto {
     private String email;
     private String phone;
     private Set<RoleResponseDto> roles;
-    private Set<ToolResponseDto> tools;
 }

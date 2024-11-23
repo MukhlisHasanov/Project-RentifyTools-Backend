@@ -1,5 +1,6 @@
 package org.rentifytools.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -21,6 +22,7 @@ public class Tool {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
+    @JsonIgnore
     private User user;
 
     @Column(name = "title")
