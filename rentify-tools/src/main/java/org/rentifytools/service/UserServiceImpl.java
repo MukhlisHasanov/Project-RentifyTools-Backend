@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -29,41 +30,37 @@ public class UserServiceImpl implements UserService{
     @Transactional
     public UserResponseDto createUser(UserRequestDto dto) {
         repository.findByEmail(dto.getEmail())
-                .ifPresent(user -> {throw new DuplicateEmailException(dto.getEmail());
+                .ifPresent(user -> {
+                    throw new DuplicateEmailException(dto.getEmail());
                 });
-        HashSet<Role> roles = new HashSet<>();
-        Role roleUser = roleService.getRole("USER");
-        roles.add(roleUser);
-        String encodedPass = encoder.encode(dto.getPassword());
 
-        User user = User.builder()
-                .firstName(dto.getFirstname())
-                .lastName(dto.getLastname())
-                .email(dto.getEmail())
-                .password(encodedPass)
-                .roles(roles)
-                .phone(dto.getPhone())
-                .build();
+        User user = mapper.map(dto, User.class);
+
+        user.setPassword(encoder.encode(dto.getPassword()));
+        user.setRoles(Set.of(roleService.getRole("USER")));
+
         User savedUser = repository.save(user);
+
         return mapper.map(savedUser, UserResponseDto.class);
     }
+
 
     @Override
     @Transactional
     public UserResponseDto updateUser(Long id, UserRequestDto dto) {
         User foundUser = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User with ID " + id + " not found"));
+
         repository.findByEmail(dto.getEmail())
-                .ifPresent(user -> {throw new DuplicateEmailException(dto.getEmail());
+                .ifPresent(user -> {
+                    throw new DuplicateEmailException(dto.getEmail());
                 });
+
+        mapper.map(dto, foundUser);
+
         if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
-            String encodedPass = encoder.encode(dto.getPassword());
-            foundUser.setPassword(encodedPass);
+            foundUser.setPassword(encoder.encode(dto.getPassword()));
         }
-        foundUser.setFirstName(dto.getFirstname());
-        foundUser.setLastName(dto.getLastname());
-        foundUser.setEmail(dto.getEmail());
-        foundUser.setPhone(dto.getPhone());
 
         return mapper.map(repository.save(foundUser), UserResponseDto.class);
     }

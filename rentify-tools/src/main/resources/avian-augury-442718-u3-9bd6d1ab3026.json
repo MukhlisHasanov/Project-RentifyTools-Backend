@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "avian-augury-442718-u3",
+  "private_key_id": "9bd6d1ab30263d398fba5943b97a3ee7559c4058",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC2qGj7LoDeA0jR\nAMr+bgCeeE7NyT5uQWikzpMijXlAh0mHsa4qvHteofVhvvF2UI6ZL8ozeQAxRRus\ntahUAk0MCFr2WyJiRlZFfKC9MN8jFzW91qHpyu51L39JAs6ek2nRAJgoNI4/u8dz\nZxMwdLT9EABSrkPYqW6//+K0RzmQsEtge/08SdMK4waHHoJwu1lVYr1HHzAgHUNU\nglTBYz36k4UIugxXrGVuzKR37tUdsruQASRO/RVUuD5Sy5IbNXMlKdHfEBF2kcHI\ntpfIdq62FBiiiaOs9oUusJBAE6WrPxmvoPWwDqUK0qWq+oHchQrL2mJemKbp35ti\ncfwMfOGbAgMBAAECggEACKxmj8bdh61QP9xxxzMiBGRiGZN8y29/sJO+mN1u7ImA\nDFl7k7vvf8bhCAsxHBUnME78owUT5UMK1WCq5ZJWZkPfTeN19oSwhAwu9czkS55G\nhwUyGw/v0tC2kpj3hsApPitxDjewqYYZKnmyh5KDJaEk4sgzoI4rHCLieP0I1r3z\nwai4BfVyYRYCACPepuYwZSw12CP9CRoaBOQPvsoYmOm4LMyxkTpHmePZgqVt9slP\nOZJQ7792mcdvBYRmo2+5Q54c6gIX3RPW/8GbSUDwLJt/5t00zJVJSANb2WBYdNoj\n0Blg95iiSZ8APjjb1bdIA0+G20Vfu4LGPw2KkhrzQQKBgQDm5xVnjHHiyIBEbJPg\nM5OGCWs+cxlBKNUGnjylN6EMjCUDs32fTeUV/JLT76I77STQ4qbJpm5Zb9dksg2W\nm+moLavfzDkKQBVxStNDQIWvGdS1uTLdjtwr5aU636ETD39bqV0WZoMIfvbM9qVk\nk1ElcV6XIFzpP4cLPZBuHCs5DQKBgQDKgudu98jGQwMUhKujU8pu/UY4Dcj2ccJi\n9ux2DJGLV92iXBMZoXuPmMUNM33n0IgoTSTXhvYw7ulW6tNbl8fJYC5FpFx30NV6\n+OcHTF13lgXCzJ7dAPmem5U3X3HDicRLVM9NHAFBixg89rWvgDoBcD0YqyErfrSN\nXIH/KR6LRwKBgCEnWPlvPwLzCwfIF0t/3FTIkW98E0o51KyIl+iZHjSxArePVCBF\njPklNOfdZov4NusPQCeAECQjXOgGcNEJPfl55U3TAvWn0excdA0Z/Jfxu4sENnt9\ngbuD07+qUHRuKzk8DjOjMHlN0Z4IZCMWy/X2W0CT0wNirb89bbmBresZAoGBAKyC\nnsv04F+kLjeIXP4hHs01jF+rvonRlpnfZseZJVLiYrcwYETxPuSwaww31QVoqtRK\nAxxmp8o/ex7Do5De1x5AhKpmvS6EA5dh+MxKzURV1EqBLMNvVTU7q/0jnTHJZiIV\n+RHizV8cMmWcdGEwhjk7d5BQF02J/hx9tW+7g315AoGANEvkx0ITYW3v7iCf4S+T\ntporF1X5J2kTgaMMx2mhg8buH1gHmwgH8+fnK5WDhh/J906bBle84fUGG8fJ/E1z\nRHXFKFE+Qp16HGlngZ4xaMkGrf7LKs4qN5U7vWBSgEoKNvWJ+usJ/3vNhkxLvDEC\nF+lJPOAHogvPRJXoCT7qDLY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "rentifytoolsadmin-439@avian-augury-442718-u3.iam.gserviceaccount.com",
+  "client_id": "114219851564704207678",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/rentifytoolsadmin-439%40avian-augury-442718-u3.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
