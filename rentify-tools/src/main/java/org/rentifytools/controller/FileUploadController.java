@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/files")
@@ -16,12 +18,20 @@ public class FileUploadController {
     private CloudStorageService storageService;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<List<String>> uploadFiles(@RequestParam("files") List<MultipartFile> files) {
         try {
-            String fileUrl = storageService.uploadFile(file);
-            return ResponseEntity.ok(fileUrl);
-        } catch (IOException e) {
-            return ResponseEntity.status(500).body("File upload failed: " + e.getMessage());
+            List<String> fileUrls = files.stream()
+                    .map(file -> {
+                        try {
+                            return storageService.uploadFile(file);
+                        } catch (IOException e) {
+                            throw new RuntimeException("File upload failed: " + e.getMessage());
+                        }
+                    })
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(fileUrls);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(500).body(null); // Возвращаем null в случае ошибки
         }
     }
 }

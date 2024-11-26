@@ -20,7 +20,7 @@ public class CloudStorageService {
 
     public CloudStorageService() throws IOException {
         storage = StorageOptions.newBuilder()
-                .setCredentials(GoogleCredentials.fromStream(new FileInputStream("src/main/resources/avian-augury-442718-u3-9bd6d1ab3026.json")))
+                .setCredentials(GoogleCredentials.fromStream(new FileInputStream("src/main/java/org/rentifytools/avian-augury-442718-u3-cf2e3e366c5a.json")))
                 .build()
                 .getService();
     }
