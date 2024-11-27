@@ -6,12 +6,13 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.rentifytools.enums.ToolsAvailabilityStatus;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "tools")
 public class Tool {
@@ -38,8 +39,9 @@ public class Tool {
     @Column(name = "price")
     private Double price;
 
-    @Column(name = "image")
-    private String image;
+    @OneToMany(mappedBy = "tool", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ToolImage> images = new ArrayList<>();
+
 
     @Override
     public boolean equals(Object o) {

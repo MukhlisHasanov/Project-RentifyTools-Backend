@@ -53,6 +53,7 @@ public class TokenFilter extends GenericFilterBean {
 
     private void setAuthentication(Claims claims) {
         String userId = claims.getSubject();
+        String email = claims.get("email", String.class);
         List<String> roles = claims.get("roles", List.class);
 
         List<GrantedAuthority> authorities = roles.stream()
@@ -61,7 +62,7 @@ public class TokenFilter extends GenericFilterBean {
 
         UsernamePasswordAuthenticationToken authentication =
                 new UsernamePasswordAuthenticationToken(userId, null, authorities);
-        authentication.setDetails(userId);
+        authentication.setDetails(email);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }

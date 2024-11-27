@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.rentifytools.dto.userDto.UserLoginDto;
+import org.rentifytools.dto.userDto.UserResponseDto;
 import org.rentifytools.entity.User;
 import org.rentifytools.security.sec_dto.RefreshRequestDto;
 import org.rentifytools.security.sec_dto.TokenResponseDto;
@@ -56,8 +57,8 @@ public class AuthController {
 
 
     @GetMapping("/profile")
-    public User getProfile() {
-        String email = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        return  userService.getUserByEmail(email).get();
+    public UserResponseDto getProfile() {
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getDetails();
+        return  userService.getUserByEmail(email);
     }
 }
