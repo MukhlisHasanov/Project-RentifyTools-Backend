@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org</groupId>
-    <artifactId>rentify-tools</artifactId>
+    <artifactId>RentifyTools</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>rentify-tools</name>
     <description>Rentify Tools Backend Application</description>

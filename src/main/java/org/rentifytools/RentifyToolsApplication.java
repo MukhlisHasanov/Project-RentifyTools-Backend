@@ -9,5 +9,4 @@ public class RentifyToolsApplication {
     public static void main(String[] args) {
         SpringApplication.run(RentifyToolsApplication.class, args);
     }
-
 }
