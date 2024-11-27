@@ -16,7 +16,6 @@ import java.util.List;
 @Setter
 public class ToolResponseDto {
     private Long id;
-//    private UserResponseDto user;
     private String title;
     private String description;
     private ToolsAvailabilityStatus status;

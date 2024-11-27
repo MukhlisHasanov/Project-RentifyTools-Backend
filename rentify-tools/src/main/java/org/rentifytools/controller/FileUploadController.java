@@ -18,20 +18,11 @@ public class FileUploadController {
     private CloudStorageService storageService;
 
     @PostMapping("/upload")
-    public ResponseEntity<List<String>> uploadFiles(@RequestParam("files") List<MultipartFile> files) {
-        try {
-            List<String> fileUrls = files.stream()
-                    .map(file -> {
-                        try {
-                            return storageService.uploadFile(file);
-                        } catch (IOException e) {
-                            throw new RuntimeException("File upload failed: " + e.getMessage());
-                        }
-                    })
-                    .collect(Collectors.toList());
-            return ResponseEntity.ok(fileUrls);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(500).body(null); // Возвращаем null в случае ошибки
-        }
+    public ResponseEntity<List<String>> uploadImages(@RequestParam("images") List<MultipartFile> files) {
+        List<String> imageUrls = files.stream()
+                .map(storageService::uploadImage) // Загружаем каждое изображение
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(imageUrls); // Возвращаем список URL
     }
 }

@@ -14,22 +14,18 @@ import java.util.UUID;
 
 @Service
 public class CloudStorageService {
-    private final Storage storage;
+    private final Storage storage = StorageOptions.getDefaultInstance().getService();
+    private final String bucketName = "rentify_tool";
 
-    private final String bucketName = "rentify_tool"; // Замените на имя вашего Bucket
-
-    public CloudStorageService() throws IOException {
-        storage = StorageOptions.newBuilder()
-                .setCredentials(GoogleCredentials.fromStream(new FileInputStream("src/main/java/org/rentifytools/avian-augury-442718-u3-cf2e3e366c5a.json")))
-                .build()
-                .getService();
-    }
-
-    public String uploadFile(MultipartFile file) throws IOException {
-        String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-        BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, fileName).build();
-        storage.create(blobInfo, file.getBytes());
-        return String.format("https://storage.googleapis.com/%s/%s", bucketName, fileName);
+    public String uploadImage(MultipartFile file) {
+        String fileName = UUID.randomUUID() + "-" + file.getOriginalFilename();
+        try {
+            BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, fileName).build();
+            storage.create(blobInfo, file.getBytes());
+            return "https://storage.googleapis.com/" + bucketName + "/" + fileName;
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to upload file", e);
+        }
     }
 }
 
