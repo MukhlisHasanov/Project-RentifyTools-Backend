@@ -9,8 +9,8 @@ spring:
       ddl-auto: update
     show-sql: true
 key:
-  access: ${ACCESS_KEY}
-  refresh: ${REFRESH_KEY}
+  access: 6d5SM/khw/d4mEb4zRTrn0KVwz79LmUKOg0R1v/0lVI=
+  refresh: DL96n5CqGIKlxg9LEH/GsyCzwoTlEmYBBbBHoKRCtmk=
 
 time:
   access: 7
