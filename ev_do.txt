@@ -1,5 +1,5 @@
-DB_HOST=${rentify_tools.HOSTNAME}
-DB_PORT=${rentify_tools.PORT}
+DB_HOST=${HOSTNAME}
+DB_PORT=${PORT}
 DB_NAME=${rentify_tools.DATABASE}
 DB_USERNAME=${rentify_tools.USERNAME}
 DB_PASSWORD=${rentify_tools.PASSWORD}
