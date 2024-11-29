@@ -9,7 +9,8 @@ import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Schema(description = "RequestDTO class for User")
 public class UserRequestDto {
     @NotBlank
