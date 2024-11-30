@@ -19,7 +19,7 @@ public class ToolImage {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tool_id", nullable = false)
-    @JsonIgnore
+    @JsonBackReference
     private Tool tool;
 
     @Column(name = "image_url", nullable = false)
