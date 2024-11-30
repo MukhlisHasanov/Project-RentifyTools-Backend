@@ -121,12 +121,12 @@ public class ToolServiceImpl implements ToolService {
             List<ToolImage> currentImages = foundTool.getImages();
 
             List<ToolImage> imagesToRemove = currentImages.stream()
-                    .filter(image -> !newImageUrls.contains(image.getImageUrl()))
+                    .filter(image -> !newImageUrls.contains(image.getImages()))
                     .toList();
             currentImages.removeAll(imagesToRemove);
 
             List<ToolImage> imagesToAdd = newImageUrls.stream()
-                    .filter(url -> currentImages.stream().noneMatch(image -> image.getImageUrl().equals(url)))
+                    .filter(url -> currentImages.stream().noneMatch(image -> image.getImages().equals(url)))
                     .map(url -> new ToolImage(null, foundTool, url))
                     .toList();
             currentImages.addAll(imagesToAdd);

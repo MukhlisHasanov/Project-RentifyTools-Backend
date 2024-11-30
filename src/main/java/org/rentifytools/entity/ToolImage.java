@@ -17,11 +17,11 @@ public class ToolImage {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tool_id", nullable = false)
     @JsonIgnore
     private Tool tool;
 
     @Column(name = "image_url", nullable = false)
-    private String imageUrl;
+    private String images;
 }
