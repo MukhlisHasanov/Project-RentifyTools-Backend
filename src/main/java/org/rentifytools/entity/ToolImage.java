@@ -1,13 +1,13 @@
 package org.rentifytools.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "tool_images")
@@ -17,11 +17,11 @@ public class ToolImage {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tool_id", nullable = false)
     @JsonIgnore
     private Tool tool;
 
     @Column(name = "image_url", nullable = false)
-    private String imageUrl;
+    private String images;
 }

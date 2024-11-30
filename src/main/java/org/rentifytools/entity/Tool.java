@@ -1,6 +1,7 @@
 package org.rentifytools.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -12,7 +13,9 @@ import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString(exclude = "user")
 @Entity
 @Table(name = "tools")
 public class Tool {
@@ -21,7 +24,7 @@ public class Tool {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
     @JsonIgnore
     private User user;
@@ -40,6 +43,7 @@ public class Tool {
     private Double price;
 
     @OneToMany(mappedBy = "tool", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<ToolImage> images = new ArrayList<>();
 
 

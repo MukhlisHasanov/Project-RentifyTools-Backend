@@ -13,8 +13,9 @@ import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@Data
+@Getter
+@Setter
+@ToString(exclude = "tool")
 @Entity
 @Table(name = "users")
 public class User {
