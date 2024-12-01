@@ -44,7 +44,7 @@ public class Tool {
 
     @OneToMany(mappedBy = "tool", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<ToolImage> images = new ArrayList<>();
+    private List<ToolImage> imageUrls = new ArrayList<>();
 
 
     @Override
