@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.rentifytools.enums.ToolsAvailabilityStatus;
 
 import java.util.ArrayList;
@@ -44,7 +43,7 @@ public class Tool {
 
     @OneToMany(mappedBy = "tool", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<ToolImage> images = new ArrayList<>();
+    private List<ToolImage> imageUrls = new ArrayList<>();
 
 
     @Override
