@@ -8,6 +8,11 @@ spring:
     username: anton
     password: Anton_Ber_24!
 
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5432/rentify_tools
+#    username: postgres
+#    password: soly1810
+
   jpa:
     hibernate:
       ddl-auto: update

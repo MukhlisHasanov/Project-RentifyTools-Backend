@@ -27,6 +27,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(appError, appError.getStatus());
     }
 
+    @ExceptionHandler(DuplicateEmailException.class)
+    public ResponseEntity<AppError> handleDuplicateEmailException(DuplicateEmailException ex) {
+        AppError appError = new AppError(
+                ex.getMessage(),
+                HttpStatus.CONFLICT
+        );
+        return new ResponseEntity<>(appError, appError.getStatus());
+    }
+
 //    @ExceptionHandler(Exception.class)
 //    public ResponseEntity<AppError> handleGenericException(Exception ex) {
 //        AppError appError = new AppError(

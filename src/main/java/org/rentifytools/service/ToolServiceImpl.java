@@ -1,6 +1,5 @@
 package org.rentifytools.service;
 
-import ch.qos.logback.core.joran.conditional.IfAction;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -11,18 +10,19 @@ import org.rentifytools.entity.ToolImage;
 import org.rentifytools.entity.User;
 import org.rentifytools.enums.ToolsAvailabilityStatus;
 import org.rentifytools.exception.NotFoundException;
+import org.rentifytools.repository.ToolImageRepository;
 import org.rentifytools.repository.ToolRepository;
 import org.rentifytools.repository.UserRepository;
 import org.rentifytools.security.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ToolServiceImpl implements ToolService {
 
+    private final ToolImageRepository toolImageRepository;
     private final ToolRepository toolRepository;
     private final ModelMapper mapper;
     private final UserRepository userRepository;
@@ -94,17 +94,21 @@ public class ToolServiceImpl implements ToolService {
         Tool tool = mapper.map(dto, Tool.class);
         User user = getCurrentUser();
         tool.setUser(user);
+
         if (dto.getStatus() == null) {
             tool.setStatus(ToolsAvailabilityStatus.AVAILABLE);
         }
-        Tool savedtool = toolRepository.save(tool);
+        Tool savedTool = toolRepository.save(tool);
 
         if(dto.getImageUrls() != null) {
+            System.out.println("Creating ToolImages from DTO imageUrls: " + dto.getImageUrls());
             List<ToolImage> images = dto.getImageUrls().stream()
-                    .map(url -> new ToolImage(null, savedtool, url))
+                    .map(url -> new ToolImage(null, savedTool, url))
                     .toList();
+            toolImageRepository.saveAll(images);
+            savedTool.setImageUrls(images);
         }
-        return mapper.map(savedtool, ToolResponseDto.class);
+        return mapper.map(savedTool, ToolResponseDto.class);
     }
 
     @Override
@@ -115,7 +119,7 @@ public class ToolServiceImpl implements ToolService {
 
         if (dto.getImageUrls() != null) {
             List<String> newImageUrls = dto.getImageUrls();
-            List<ToolImage> currentImages = foundTool.getImages();
+            List<ToolImage> currentImages = foundTool.getImageUrls();
 
             List<ToolImage> imagesToRemove = currentImages.stream()
                     .filter(image -> !newImageUrls.contains(image.getImageUrl()))

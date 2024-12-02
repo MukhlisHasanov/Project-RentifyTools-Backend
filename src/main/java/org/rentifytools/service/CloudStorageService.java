@@ -19,8 +19,14 @@ public class CloudStorageService {
 
     public String uploadImage(MultipartFile file) {
         String fileName = UUID.randomUUID() + "-" + file.getOriginalFilename();
+        String contentType = file.getContentType();
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
         try {
-            BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, fileName).build();
+            BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, fileName)
+                    .setContentType(contentType)
+                    .build();
             storage.create(blobInfo, file.getBytes());
             return "https://storage.googleapis.com/" + bucketName + "/" + fileName;
         } catch (IOException e) {
@@ -28,4 +34,3 @@ public class CloudStorageService {
         }
     }
 }
-

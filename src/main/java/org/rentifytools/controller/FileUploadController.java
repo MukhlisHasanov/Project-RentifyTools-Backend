@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,9 +19,9 @@ public class FileUploadController {
     @PostMapping("/upload")
     public ResponseEntity<List<String>> uploadImages(@RequestParam("images") List<MultipartFile> files) {
         List<String> imageUrls = files.stream()
-                .map(storageService::uploadImage) // Загружаем каждое изображение
+                .map(storageService::uploadImage)
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(imageUrls); // Возвращаем список URL
+        return ResponseEntity.ok(imageUrls);
     }
 }
