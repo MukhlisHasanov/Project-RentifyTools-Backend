@@ -105,7 +105,7 @@ public class ToolServiceImpl implements ToolService {
                     .map(url -> new ToolImage(null, savedTool, url))
                     .toList();
             toolImageRepository.saveAll(images);
-            savedTool.setImageUrls(images);
+            savedTool.setImages(images);
         }
         return mapper.map(savedTool, ToolResponseDto.class);
     }
@@ -118,15 +118,15 @@ public class ToolServiceImpl implements ToolService {
 
         if (dto.getImageUrls() != null) {
             List<String> newImageUrls = dto.getImageUrls();
-            List<ToolImage> currentImages = foundTool.getImageUrls();
+            List<ToolImage> currentImages = foundTool.getImages();
 
             List<ToolImage> imagesToRemove = currentImages.stream()
-                    .filter(image -> !newImageUrls.contains(image.getImageUrls()))
+                    .filter(image -> !newImageUrls.contains(image.getImages()))
                     .toList();
             currentImages.removeAll(imagesToRemove);
 
             List<ToolImage> imagesToAdd = newImageUrls.stream()
-                    .filter(url -> currentImages.stream().noneMatch(image -> image.getImageUrls().equals(url)))
+                    .filter(url -> currentImages.stream().noneMatch(image -> image.getImages().equals(url)))
                     .map(url -> new ToolImage(null, foundTool, url))
                     .toList();
             currentImages.addAll(imagesToAdd);

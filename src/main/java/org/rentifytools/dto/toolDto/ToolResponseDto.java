@@ -16,6 +16,6 @@ public class ToolResponseDto {
     private String title;
     private String description;
     private ToolsAvailabilityStatus status;
-    private List<String> imageUrls;
+    private List<UrlImageDto> images;
     private Double price;
 }
