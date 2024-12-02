@@ -1,7 +1,6 @@
 package org.rentifytools.dto.toolDto;
 
 import lombok.*;
-import org.rentifytools.dto.urlImageDto.UrlImageDto;
 import org.rentifytools.enums.ToolsAvailabilityStatus;
 
 import java.util.List;
@@ -16,6 +15,6 @@ public class ToolResponseDto {
     private String title;
     private String description;
     private ToolsAvailabilityStatus status;
-    private List<UrlImageDto> images;
+    private List<String> imageUrls;
     private Double price;
 }

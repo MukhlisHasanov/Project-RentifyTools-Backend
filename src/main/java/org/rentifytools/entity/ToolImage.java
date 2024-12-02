@@ -1,6 +1,5 @@
 package org.rentifytools.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,5 +22,10 @@ public class ToolImage {
     private Tool tool;
 
     @Column(name = "image_url", nullable = false)
-    private String images;
+    private String imageUrl;
+
+    @Override
+    public String toString() {
+        return imageUrl;
+    }
 }
