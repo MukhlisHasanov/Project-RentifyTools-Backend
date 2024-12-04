@@ -1,16 +1,11 @@
 package org.rentifytools.service;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.storage.BlobInfo;
-import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
+import com.google.cloud.storage.*;
+import org.rentifytools.security.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.UUID;
 
 @Service
 public class CloudStorageService {
@@ -18,11 +13,18 @@ public class CloudStorageService {
     private final String bucketName = "rentify_tool";
 
     public String uploadImage(MultipartFile file) {
-        String fileName = UUID.randomUUID() + "-" + file.getOriginalFilename();
+        Long userId = SecurityUtils.getCurrentUserId();
+        String fileName = userId + "-" + file.getOriginalFilename();
         String contentType = file.getContentType();
         if (contentType == null) {
             contentType = "application/octet-stream";
         }
+
+        Blob blob = storage.get(BlobId.of(bucketName, fileName));
+        if (blob != null && blob.exists()) {
+            return "https://storage.googleapis.com/" + bucketName + "/" + fileName;
+        }
+
         try {
             BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, fileName)
                     .setContentType(contentType)
@@ -32,5 +34,12 @@ public class CloudStorageService {
         } catch (IOException e) {
             throw new RuntimeException("Failed to upload file", e);
         }
+    }
+
+    public boolean deleteFileByUrl(String fileUrl) {
+        String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
+        BlobId blobId = BlobId.of(bucketName, fileName);
+
+        return storage.delete(blobId);
     }
 }
