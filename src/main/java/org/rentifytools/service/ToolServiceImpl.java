@@ -24,8 +24,9 @@ public class ToolServiceImpl implements ToolService {
 
     private final ToolImageRepository toolImageRepository;
     private final ToolRepository toolRepository;
-    private final ModelMapper mapper;
     private final UserRepository userRepository;
+    private final CloudStorageService storageService;
+    private final ModelMapper mapper;
 
     @Override
     public List<ToolResponseDto> getAllTools() {
@@ -124,12 +125,14 @@ public class ToolServiceImpl implements ToolService {
             List<ToolImage> imagesToRemove = currentImages.stream()
                     .filter(image -> !newImageUrls.contains(image.getImageUrl()))
                     .toList();
+            imagesToRemove.forEach(image -> storageService.deleteFileByUrl(image.getImageUrl()));
             currentImages.removeAll(imagesToRemove);
 
             List<ToolImage> imagesToAdd = newImageUrls.stream()
                     .filter(url -> currentImages.stream().noneMatch(image -> image.getImageUrl().equals(url)))
                     .map(url -> new ToolImage(null, foundTool, url))
                     .toList();
+
             currentImages.addAll(imagesToAdd);
         }
         return mapper.map(toolRepository.save(foundTool), ToolResponseDto.class);
@@ -148,6 +151,9 @@ public class ToolServiceImpl implements ToolService {
     @Transactional
     public ToolResponseDto deleteTool(Long toolId) {
         Tool tool = findToolById(toolId);
+
+        tool.getImageUrls().forEach(image -> storageService.deleteFileByUrl(image.getImageUrl()));
+
         toolRepository.deleteById(toolId);
         return mapper.map(tool, ToolResponseDto.class);
     }
