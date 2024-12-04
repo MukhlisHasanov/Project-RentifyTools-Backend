@@ -33,8 +33,8 @@ public class UserController {
 
     @Operation(summary = "Getting user by Id")
     @GetMapping("/{userId}")
-    public UserResponseDto getUserById(@PathVariable (name = "userId") Long id) {
-        return service.getUserById(id);
+    public ResponseEntity<UserResponseDto> getUserById(@PathVariable (name = "userId") Long id) {
+        return new ResponseEntity<>(service.getUserById(id), HttpStatus.OK);
     }
 
     @Operation(summary = "Adding new user to the list")

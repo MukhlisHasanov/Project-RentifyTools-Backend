@@ -10,8 +10,10 @@ import org.rentifytools.entity.User;
 import org.rentifytools.exception.DuplicateEmailException;
 import org.rentifytools.exception.NotFoundException;
 import org.rentifytools.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashSet;
 import java.util.List;
@@ -33,6 +35,11 @@ public class UserServiceImpl implements UserService{
                     throw new DuplicateEmailException(dto.getEmail());
                 });
 
+        repository.findByPhone(dto.getPhone())
+                .ifPresent(user -> {
+                    throw new ResponseStatusException(HttpStatus.CONFLICT, "Phone number already exists");
+                });
+
         User user = mapper.map(dto, User.class);
 
         user.setPassword(encoder.encode(dto.getPassword()));
@@ -50,10 +57,14 @@ public class UserServiceImpl implements UserService{
         User foundUser = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User with ID " + id + " not found"));
 
-        repository.findByEmail(dto.getEmail())
-                .ifPresent(user -> {
-                    throw new DuplicateEmailException(dto.getEmail());
-                });
+//        repository.findByEmail(dto.getEmail())
+//                .ifPresent(user -> {
+//                    throw new DuplicateEmailException(dto.getEmail());
+//                });
+//        repository.findByPhone(dto.getPhone())
+//                .ifPresent(user -> {
+//                    throw new ResponseStatusException(HttpStatus.CONFLICT, "Phone number already exists");
+//                });
 
         mapper.map(dto, foundUser);
 
@@ -73,7 +84,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserResponseDto getUserById(Long id) {
-        return mapper.map(repository.findById(id), UserResponseDto.class);
+        User user = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User with ID " + id + " not found"));
+        return mapper.map(user, UserResponseDto.class);
     }
 
     @Override
