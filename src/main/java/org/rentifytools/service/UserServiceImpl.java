@@ -90,9 +90,23 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public List<UserResponseDto> getUsersByLastname(String lastname) {
+        return repository.findAllByLastName(lastname).stream()
+                .map(user -> mapper.map(user, UserResponseDto.class))
+                .toList();
+    }
+
+    @Override
     public UserResponseDto getUserByEmail(String email) {
         User user = repository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("User not found with email: " + email));
+        return mapper.map(user, UserResponseDto.class);
+    }
+
+    @Override
+    public UserResponseDto getUserByPhone(String phone) {
+        User user = repository.findByPhone(phone)
+                .orElseThrow(() -> new NotFoundException("User not found with phone: " + phone));
         return mapper.map(user, UserResponseDto.class);
     }
 

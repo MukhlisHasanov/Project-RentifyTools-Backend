@@ -4,14 +4,17 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.rentifytools.dto.userDto.SearchRequestDto;
 import org.rentifytools.dto.userDto.UserRequestDto;
 import org.rentifytools.dto.userDto.UserResponseDto;
 import org.rentifytools.exception.NotFoundException;
+import org.rentifytools.security.utils.SecurityUtils;
 import org.rentifytools.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Tag(name = "User API", description = "Methods for working with users")
@@ -31,6 +34,28 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    @PostMapping("/search")
+    public ResponseEntity<List<UserResponseDto>> searchUsers(@RequestBody SearchRequestDto searchRequest) {
+        String lastname = searchRequest.getLastname();
+        String email = searchRequest.getEmail();
+        String phone = searchRequest.getPhone();
+        List<UserResponseDto> users;
+
+        if(isNullOrEmpty(lastname) && isNullOrEmpty(email) && isNullOrEmpty(phone)) {
+            users = service.getAllUsers();
+        } else {
+            users = new ArrayList<>();
+            if (!isNullOrEmpty(email)) {
+                users.add(service.getUserByEmail(email));
+            } else if (!isNullOrEmpty(phone)) {
+                users.add(service.getUserByPhone(phone));
+            } else if (!isNullOrEmpty(lastname)) {
+                users = service.getUsersByLastname(lastname);
+            }
+        }
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
     @Operation(summary = "Getting user by Id")
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponseDto> getUserById(@PathVariable (name = "userId") Long id) {
@@ -40,6 +65,7 @@ public class UserController {
     @Operation(summary = "Adding new user to the list")
     @PostMapping
     public ResponseEntity<UserResponseDto> createUser(@Valid @RequestBody UserRequestDto user) {
+        System.out.println("Create user request received: " + user);
         return new ResponseEntity<>(service.createUser(user), HttpStatus.CREATED);
     }
 
@@ -57,12 +83,24 @@ public class UserController {
 
     @Operation(summary = "Removing a user from the list")
     @DeleteMapping("/{id}")
-    public ResponseEntity<UserResponseDto> deleteUser(@PathVariable (name = "id") Long id) {
+    public ResponseEntity<UserResponseDto> deleteMe(@PathVariable (name = "id") Long id) {
         return new ResponseEntity<>(service.deleteUser(id), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Removing authorized user from the list")
+    @DeleteMapping("/me")
+    public ResponseEntity<UserResponseDto> deleteMe() {
+        Long userId = SecurityUtils.getCurrentUserId();
+        System.out.println("Current User ID: " + userId);
+        return new ResponseEntity<>(service.deleteUser(userId), HttpStatus.OK);
     }
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<String> userNotFoundException(NotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+
+    private boolean isNullOrEmpty(String value) {
+        return value == null || value.trim().isEmpty();
     }
 }

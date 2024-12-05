@@ -10,7 +10,9 @@ public interface UserService {
     UserResponseDto updateUser(Long id, UserRequestDto dto);
     List<UserResponseDto> getAllUsers();
     UserResponseDto getUserById(Long id);
+    List<UserResponseDto> getUsersByLastname(String lastname);
     UserResponseDto getUserByEmail(String email);
+    UserResponseDto getUserByPhone(String phone);
     UserResponseDto setRole(Long id, String title);
     UserResponseDto deleteUser(Long id);
 }

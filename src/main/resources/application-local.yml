@@ -27,3 +27,8 @@ key:
 time:
   access: 7
   refresh: 30
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+
