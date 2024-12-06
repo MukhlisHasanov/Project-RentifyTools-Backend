@@ -45,6 +45,11 @@ public class Tool {
     @JsonManagedReference
     private List<ToolImage> imageUrls = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(name = "tool_categories",
+            joinColumns = @JoinColumn(name = "tool_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private List<Category> categories = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
