@@ -1,5 +1,6 @@
 package org.rentifytools.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.checkerframework.checker.units.qual.N;
@@ -28,5 +29,6 @@ public class Category {
     private byte[] image;
 
     @ManyToMany(mappedBy = "categories")
+    @JsonBackReference
     private Set<Tool> tools = new HashSet<Tool>();
 }

@@ -17,6 +17,8 @@ public interface ToolService {
 
     List<ToolResponseDto> getByTitleContaining(String toolName);
 
+    List<ToolResponseDto> getToolsByCategory(Long categoryId);
+
     List<ToolResponseDto> getAllToolsByUser();
 
     ToolResponseDto addNewTool(ToolRequestDto tool);

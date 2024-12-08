@@ -49,6 +49,7 @@ public class Tool {
     @JoinTable(name = "tool_categories",
             joinColumns = @JoinColumn(name = "tool_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
+    @JsonManagedReference
     private List<Category> categories = new ArrayList<>();
 
     @Override

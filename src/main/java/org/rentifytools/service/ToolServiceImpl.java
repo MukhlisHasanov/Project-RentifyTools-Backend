@@ -66,6 +66,13 @@ public class ToolServiceImpl implements ToolService {
                 .toList();
     }
 
+    @Override
+    public List<ToolResponseDto> getToolsByCategory(Long categoryId) {
+        return toolRepository.findByCategoriesId(categoryId).stream()
+                .map(tool -> mapper.map(tool, ToolResponseDto.class))
+                .toList();
+    }
+
 //   ===================================
 //    @Override
 //    public List<ToolResponseDto> getToolsByStatus(ToolsAvailabilityStatus status) {
