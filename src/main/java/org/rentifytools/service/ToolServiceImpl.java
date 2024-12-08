@@ -5,11 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.rentifytools.dto.toolDto.ToolRequestDto;
 import org.rentifytools.dto.toolDto.ToolResponseDto;
+import org.rentifytools.entity.Category;
 import org.rentifytools.entity.Tool;
 import org.rentifytools.entity.ToolImage;
 import org.rentifytools.entity.User;
 import org.rentifytools.enums.ToolsAvailabilityStatus;
 import org.rentifytools.exception.NotFoundException;
+import org.rentifytools.repository.CategoryRepository;
 import org.rentifytools.repository.ToolImageRepository;
 import org.rentifytools.repository.ToolRepository;
 import org.rentifytools.repository.UserRepository;
@@ -25,6 +27,7 @@ public class ToolServiceImpl implements ToolService {
     private final ToolImageRepository toolImageRepository;
     private final ToolRepository toolRepository;
     private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
     private final CloudStorageService storageService;
     private final ModelMapper mapper;
 
@@ -106,6 +109,11 @@ public class ToolServiceImpl implements ToolService {
         if (dto.getStatus() == null) {
             tool.setStatus(ToolsAvailabilityStatus.AVAILABLE);
         }
+
+        if (dto.getCategoryIds() != null && !dto.getCategoryIds().isEmpty()) {
+            List<Category> categories = categoryRepository.findAllById(dto.getCategoryIds());
+            tool.setCategories(categories);
+        }
         Tool savedTool = toolRepository.save(tool);
 
         if(dto.getImageUrls() != null) {
@@ -124,6 +132,11 @@ public class ToolServiceImpl implements ToolService {
     public ToolResponseDto updateTool(Long toolId, ToolRequestDto dto) {
         Tool foundTool = findToolById(toolId);
         mapper.map(dto, foundTool);
+
+        if (dto.getCategoryIds() != null) {
+            List<Category> updatedCategories = categoryRepository.findAllById(dto.getCategoryIds());
+            foundTool.setCategories(updatedCategories);
+        }
 
         if (dto.getImageUrls() != null) {
             List<String> newImageUrls = dto.getImageUrls();
