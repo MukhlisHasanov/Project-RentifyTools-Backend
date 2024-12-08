@@ -15,4 +15,5 @@ public class ToolRequestDto {
     private ToolsAvailabilityStatus status;
     private List<String> imageUrls;
     private Double price;
+    private List<Long> categoryIds;
 }

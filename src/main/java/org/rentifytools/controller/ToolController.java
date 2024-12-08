@@ -48,6 +48,15 @@ public class ToolController {
         return toolService.getToolById(toolId);
     }
 
+    @Operation(summary = "Getting tool by id")
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<List<ToolResponseDto>> getToolByCategory(@PathVariable Long categoryId) {
+        List<ToolResponseDto> tools = toolService.getToolsByCategory(categoryId);
+        if (tools.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(tools, HttpStatus.OK);
+    }
 //    @Operation(summary = "Getting tools by name")
 //    @GetMapping("/{toolName}")
 //    public List<ToolResponseDto> getToolByTitle(@RequestParam(name = "toolName") String toolTitle) {
