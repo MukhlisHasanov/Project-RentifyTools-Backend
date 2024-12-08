@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.rentifytools.dto.toolDto.ToolRequestDto;
 import org.rentifytools.dto.toolDto.ToolResponseDto;
+import org.rentifytools.dto.toolDto.ToolUserResponseDto;
 import org.rentifytools.entity.Tool;
 import org.rentifytools.entity.ToolImage;
 import org.rentifytools.entity.User;
@@ -35,7 +36,7 @@ public class ToolServiceImpl implements ToolService {
     }
 
     public Tool findToolById(Long toolId) {
-        String exceptionMessage = "Tool ID %d not found";
+        String exceptionMessage = "Tool with ID %d not found";
         return toolRepository.findById(toolId)
                 .orElseThrow(() -> new NotFoundException(String.format(exceptionMessage, toolId)));
     }
@@ -48,8 +49,8 @@ public class ToolServiceImpl implements ToolService {
     }
 
     @Override
-    public ToolResponseDto getToolById(Long toolId) {
-        return mapper.map(findToolById(toolId), ToolResponseDto.class);
+    public ToolUserResponseDto getToolById(Long toolId) {
+        return mapper.map(findToolById(toolId), ToolUserResponseDto.class);
     }
 
     @Override
@@ -101,7 +102,7 @@ public class ToolServiceImpl implements ToolService {
         }
         Tool savedTool = toolRepository.save(tool);
 
-        if(dto.getImageUrls() != null) {
+        if (dto.getImageUrls() != null) {
             System.out.println("Creating ToolImages from DTO imageUrls: " + dto.getImageUrls());
             List<ToolImage> images = dto.getImageUrls().stream()
                     .map(url -> new ToolImage(null, savedTool, url))
