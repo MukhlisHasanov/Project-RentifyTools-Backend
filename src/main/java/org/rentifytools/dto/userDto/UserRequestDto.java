@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.rentifytools.dto.addressDto.AddressRequestDto;
+import org.rentifytools.dto.addressDto.AddressResponseDto;
+import org.rentifytools.entity.Address;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,6 +28,7 @@ public class UserRequestDto {
     @Schema(description = "User lastname", example = "Johnson")
     private String lastname;
 
+    @NotBlank
     @Size(min = 5, max = 35)
     @Email(message = "Invalid email format")
     @Schema(description = "User email", example = "john@example.com")
@@ -37,8 +41,11 @@ public class UserRequestDto {
     @Schema(description = "User password", example = "john1234")
     private String password;
 
+    @NotBlank
     @Size(min = 6, max = 14)
     @Pattern(regexp = "^\\+?[1-9]\\d{0,2}[- .]?\\(?\\d{1,4}\\)?[- .]?\\d{1,4}[- .]?\\d{1,9}|^\\d{10,15}$", message = "Invalid phone number")
     @Schema(description = "User phone number", example = "123-456-789")
     private String phone;
+    
+    private AddressRequestDto address;
 }
