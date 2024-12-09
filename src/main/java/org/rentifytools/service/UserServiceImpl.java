@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.rentifytools.dto.userDto.UserRequestDto;
 import org.rentifytools.dto.userDto.UserResponseDto;
+import org.rentifytools.entity.Address;
 import org.rentifytools.entity.Role;
 import org.rentifytools.entity.User;
 import org.rentifytools.exception.DuplicateEmailException;
@@ -21,7 +22,7 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final RoleService roleService;
     private final BCryptPasswordEncoder encoder;
@@ -41,6 +42,8 @@ public class UserServiceImpl implements UserService{
                 });
 
         User user = mapper.map(dto, User.class);
+        Address address = new Address();
+        user.setAddress(address);
 
         user.setPassword(encoder.encode(dto.getPassword()));
         user.setRoles(Set.of(roleService.getRole("USER")));

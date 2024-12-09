@@ -38,11 +38,15 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String phone;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id", nullable = false, updatable = false)
+    private Address address;
+
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable( name = "user_role",
+    @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
 
