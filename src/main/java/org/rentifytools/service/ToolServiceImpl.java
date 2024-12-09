@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.rentifytools.dto.toolDto.ToolRequestDto;
+import org.rentifytools.dto.toolDto.ToolResponseDto;
 import org.rentifytools.entity.Category;
 import org.rentifytools.dto.toolDto.ToolUserResponseDto;
 import org.rentifytools.entity.Tool;
