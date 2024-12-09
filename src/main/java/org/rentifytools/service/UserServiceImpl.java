@@ -3,6 +3,7 @@ package org.rentifytools.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.rentifytools.dto.addressDto.AddressRequestDto;
 import org.rentifytools.dto.userDto.UserRequestDto;
 import org.rentifytools.dto.userDto.UserResponseDto;
 import org.rentifytools.entity.Address;
@@ -21,6 +22,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static org.apache.coyote.http11.Constants.a;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -30,6 +33,7 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder encoder;
     private final ModelMapper mapper;
     private final AddressRepository addressRepository;
+    private final AddressServiceImpl addressServiceImpl;
 
     @Override
     @Transactional
@@ -45,11 +49,11 @@ public class UserServiceImpl implements UserService {
                 });
 
         User user = mapper.map(dto, User.class);
-        Address address = new Address();
-        Address savedAddress = addressRepository.save(address);
-        user.setAddress(savedAddress);
-//        user.setAddress(address);
 
+        Address address = mapper.map(dto.getAddress(), Address.class);
+        Address savedAddress = addressRepository.save(address);
+
+        user.setAddress(savedAddress);
         user.setPassword(encoder.encode(dto.getPassword()));
         user.setRoles(Set.of(roleService.getRole("USER")));
 

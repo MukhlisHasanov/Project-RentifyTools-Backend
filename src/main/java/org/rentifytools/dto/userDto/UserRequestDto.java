@@ -46,6 +46,6 @@ public class UserRequestDto {
     @Pattern(regexp = "^\\+?[1-9]\\d{0,2}[- .]?\\(?\\d{1,4}\\)?[- .]?\\d{1,4}[- .]?\\d{1,9}|^\\d{10,15}$", message = "Invalid phone number")
     @Schema(description = "User phone number", example = "123-456-789")
     private String phone;
-
+    
     private AddressRequestDto address;
 }

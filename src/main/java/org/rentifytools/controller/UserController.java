@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.rentifytools.dto.addressDto.AddressRequestDto;
 import org.rentifytools.dto.userDto.SearchRequestDto;
 import org.rentifytools.dto.userDto.UserRequestDto;
 import org.rentifytools.dto.userDto.UserResponseDto;
@@ -41,7 +42,7 @@ public class UserController {
         String phone = searchRequest.getPhone();
         List<UserResponseDto> users;
 
-        if(isNullOrEmpty(lastname) && isNullOrEmpty(email) && isNullOrEmpty(phone)) {
+        if (isNullOrEmpty(lastname) && isNullOrEmpty(email) && isNullOrEmpty(phone)) {
             users = service.getAllUsers();
         } else {
             users = new ArrayList<>();
@@ -58,9 +59,16 @@ public class UserController {
 
     @Operation(summary = "Getting user by Id")
     @GetMapping("/{userId}")
-    public ResponseEntity<UserResponseDto> getUserById(@PathVariable (name = "userId") Long id) {
+    public ResponseEntity<UserResponseDto> getUserById(@PathVariable(name = "userId") Long id) {
         return new ResponseEntity<>(service.getUserById(id), HttpStatus.OK);
     }
+
+//    @Operation(summary = "Adding new user to the list")
+//    @PostMapping
+//    public ResponseEntity<UserResponseDto> createUser(@Valid @RequestBody UserRequestDto user) {
+//        System.out.println("Create user request received: " + user);
+//        return new ResponseEntity<>(service.createUser(user), HttpStatus.CREATED);
+//    }
 
     @Operation(summary = "Adding new user to the list")
     @PostMapping
@@ -71,19 +79,19 @@ public class UserController {
 
     @Operation(summary = "Editing user information")
     @PutMapping("/{userId}")
-    public ResponseEntity<UserResponseDto> updateUser(@PathVariable (name = "userId") Long userId, @Valid @RequestBody UserRequestDto userDto) {
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable(name = "userId") Long userId, @Valid @RequestBody UserRequestDto userDto) {
         return new ResponseEntity<>(service.updateUser(userId, userDto), HttpStatus.OK);
     }
 
     @Operation(summary = "Assign a new role for user")
     @PatchMapping("/{id}")
-    public UserResponseDto setRole(@PathVariable (name = "id") Long id, @Valid @RequestParam(name = "role", defaultValue = "USER") String title) {
+    public UserResponseDto setRole(@PathVariable(name = "id") Long id, @Valid @RequestParam(name = "role", defaultValue = "USER") String title) {
         return service.setRole(id, title);
     }
 
     @Operation(summary = "Removing a user from the list")
     @DeleteMapping("/{id}")
-    public ResponseEntity<UserResponseDto> deleteMe(@PathVariable (name = "id") Long id) {
+    public ResponseEntity<UserResponseDto> deleteMe(@PathVariable(name = "id") Long id) {
         return new ResponseEntity<>(service.deleteUser(id), HttpStatus.OK);
     }
 
