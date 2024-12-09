@@ -1,6 +1,7 @@
 package org.rentifytools.dto.toolDto;
 
 import lombok.*;
+import org.rentifytools.dto.userDto.UserSimpleResponseDto;
 import org.rentifytools.enums.ToolsAvailabilityStatus;
 
 import java.util.List;
@@ -9,11 +10,13 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ToolRequestDto {
+@ToString
+public class ToolUserResponseDto {
+    private Long id;
     private String title;
     private String description;
     private ToolsAvailabilityStatus status;
     private List<String> imageUrls;
     private Double price;
-    private List<Long> categoryIds;
+    private UserSimpleResponseDto user;
 }
