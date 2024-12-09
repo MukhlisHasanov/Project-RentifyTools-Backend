@@ -42,7 +42,7 @@ public class User {
     private String phone;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id", nullable = false, updatable = false)
+    @JoinColumn(name = "address_id")
     private Address address;
 
     @ManyToMany(fetch = FetchType.EAGER)

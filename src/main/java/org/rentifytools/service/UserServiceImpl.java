@@ -10,6 +10,7 @@ import org.rentifytools.entity.Role;
 import org.rentifytools.entity.User;
 import org.rentifytools.exception.DuplicateEmailException;
 import org.rentifytools.exception.NotFoundException;
+import org.rentifytools.repository.AddressRepository;
 import org.rentifytools.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,8 +26,10 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final RoleService roleService;
+    private final AddressService addressService;
     private final BCryptPasswordEncoder encoder;
     private final ModelMapper mapper;
+    private final AddressRepository addressRepository;
 
     @Override
     @Transactional
@@ -43,7 +46,9 @@ public class UserServiceImpl implements UserService {
 
         User user = mapper.map(dto, User.class);
         Address address = new Address();
-        user.setAddress(address);
+        Address savedAddress = addressRepository.save(address);
+        user.setAddress(savedAddress);
+//        user.setAddress(address);
 
         user.setPassword(encoder.encode(dto.getPassword()));
         user.setRoles(Set.of(roleService.getRole("USER")));
