@@ -1,6 +1,7 @@
 package org.rentifytools.dto.userDto;
 
 import lombok.*;
+import org.rentifytools.dto.addressDto.AddressResponseDto;
 import org.rentifytools.dto.roleDto.RoleResponseDto;
 
 import java.util.Set;
@@ -15,5 +16,6 @@ public class UserResponseDto {
     private String lastname;
     private String email;
     private String phone;
+    private AddressResponseDto address;
     private Set<RoleResponseDto> roles;
 }
