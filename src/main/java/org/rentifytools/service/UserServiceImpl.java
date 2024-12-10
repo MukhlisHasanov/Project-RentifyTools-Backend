@@ -124,7 +124,11 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new NotFoundException("User with id " + id + " not found"));
         Role roleAdmin = roleService.getRole(title);
         HashSet<Role> roles = new HashSet<>(entity.getRoles());
-        roles.add(roleAdmin);
+        if (roles.contains(roleAdmin)) {
+            roles.remove(roleAdmin);
+        } else {
+            roles.add(roleAdmin);
+        }
         entity.setRoles(roles);
         entity = repository.save(entity);
         return mapper.map(entity, UserResponseDto.class);
