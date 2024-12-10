@@ -2,6 +2,7 @@ package org.rentifytools.service;
 
 import org.rentifytools.dto.toolDto.ToolRequestDto;
 import org.rentifytools.dto.toolDto.ToolResponseDto;
+import org.rentifytools.dto.toolDto.ToolUserResponseDto;
 import org.rentifytools.security.utils.SecurityUtils;
 import org.rentifytools.enums.ToolsAvailabilityStatus;
 
@@ -11,11 +12,13 @@ public interface ToolService {
 
     List<ToolResponseDto> getAllTools();
 
-    ToolResponseDto getToolById(Long toolId);
+    ToolUserResponseDto getToolById(Long toolId);
 
     List<ToolResponseDto> getToolsByTitle(String toolName);
 
     List<ToolResponseDto> getByTitleContaining(String toolName);
+
+    List<ToolResponseDto> getToolsByCategory(Long categoryId);
 
     List<ToolResponseDto> getAllToolsByUser();
 

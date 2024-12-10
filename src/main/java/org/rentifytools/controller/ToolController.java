@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.rentifytools.dto.toolDto.ToolRequestDto;
 import org.rentifytools.dto.toolDto.ToolResponseDto;
+import org.rentifytools.dto.toolDto.ToolUserResponseDto;
 import org.rentifytools.enums.ToolsAvailabilityStatus;
 import org.rentifytools.exception.NotFoundException;
 import org.rentifytools.service.ToolService;
@@ -43,10 +44,19 @@ public class ToolController {
 
     @Operation(summary = "Getting tool by id")
     @GetMapping("/{toolId}")
-    public ToolResponseDto getToolById(@PathVariable(name = "toolId") Long toolId) {
+    public ToolUserResponseDto getToolById(@PathVariable(name = "toolId") Long toolId) {
         return toolService.getToolById(toolId);
     }
 
+    @Operation(summary = "Getting tool by id")
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<List<ToolResponseDto>> getToolByCategory(@PathVariable Long categoryId) {
+        List<ToolResponseDto> tools = toolService.getToolsByCategory(categoryId);
+        if (tools.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(tools, HttpStatus.OK);
+    }
 //    @Operation(summary = "Getting tools by name")
 //    @GetMapping("/{toolName}")
 //    public List<ToolResponseDto> getToolByTitle(@RequestParam(name = "toolName") String toolTitle) {
@@ -86,7 +96,7 @@ public class ToolController {
     @Operation(summary = "Changing the availability status of the tool")
     @PatchMapping("/{toolId}")
     public ToolResponseDto setToolStatus(@PathVariable(name = "toolId") Long toolId,
-                                         @RequestParam(name = "status", required = true,  defaultValue = "AVAILABLE") ToolsAvailabilityStatus status) {
+                                         @RequestParam(name = "status", required = true, defaultValue = "AVAILABLE") ToolsAvailabilityStatus status) {
         return toolService.setToolStatus(toolId, status);
     }
 
