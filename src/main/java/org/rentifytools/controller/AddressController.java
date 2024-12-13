@@ -6,6 +6,8 @@ import org.rentifytools.dto.addressDto.AddressRequestDto;
 import org.rentifytools.dto.addressDto.AddressResponseDto;
 import org.rentifytools.dto.toolDto.ToolRequestDto;
 import org.rentifytools.dto.toolDto.ToolResponseDto;
+import org.rentifytools.dto.userDto.UserRequestDto;
+import org.rentifytools.dto.userDto.UserResponseDto;
 import org.rentifytools.service.AddressService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,5 +35,11 @@ public class AddressController {
     @PostMapping
     public ResponseEntity<AddressResponseDto> addAddress(@RequestBody AddressRequestDto dto) {
         return new ResponseEntity<>(addressService.addAddress(dto), HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Editing user information")
+    @PutMapping("/{addressId}")
+    public ResponseEntity<AddressResponseDto> updateAddress(@PathVariable(name = "addressId") Long addressId, @RequestBody AddressRequestDto addressDto) {
+        return new ResponseEntity<>(addressService.updateAddress(addressId, addressDto), HttpStatus.OK);
     }
 }

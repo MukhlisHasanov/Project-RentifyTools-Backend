@@ -63,13 +63,6 @@ public class UserController {
         return new ResponseEntity<>(service.getUserById(id), HttpStatus.OK);
     }
 
-//    @Operation(summary = "Adding new user to the list")
-//    @PostMapping
-//    public ResponseEntity<UserResponseDto> createUser(@Valid @RequestBody UserRequestDto user) {
-//        System.out.println("Create user request received: " + user);
-//        return new ResponseEntity<>(service.createUser(user), HttpStatus.CREATED);
-//    }
-
     @Operation(summary = "Adding new user to the list")
     @PostMapping
     public ResponseEntity<UserResponseDto> createUser(@Valid @RequestBody UserRequestDto user) {
@@ -79,7 +72,7 @@ public class UserController {
 
     @Operation(summary = "Editing user information")
     @PutMapping("/{userId}")
-    public ResponseEntity<UserResponseDto> updateUser(@PathVariable(name = "userId") Long userId, @Valid @RequestBody UserRequestDto userDto) {
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable(name = "userId") Long userId, @RequestBody UserRequestDto userDto) {
         return new ResponseEntity<>(service.updateUser(userId, userDto), HttpStatus.OK);
     }
 
