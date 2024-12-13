@@ -3,6 +3,7 @@ package org.rentifytools.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.rentifytools.dto.userDto.UserLoginDto;
 import org.rentifytools.dto.userDto.UserRequestDto;
 import org.rentifytools.dto.userDto.UserResponseDto;
 import org.rentifytools.entity.Address;
@@ -29,6 +30,14 @@ public class UserServiceImpl implements UserService {
     private final RoleService roleService;
     private final BCryptPasswordEncoder encoder;
     private final ModelMapper mapper;
+
+    @Override
+    public void checkEmail(UserLoginDto dto) {
+        repository.findByEmail(dto.getEmail())
+                .ifPresent(user -> {
+                    throw new DuplicateEmailException(dto.getEmail());
+                });
+    }
 
     @Override
     @Transactional
@@ -66,19 +75,16 @@ public class UserServiceImpl implements UserService {
         User foundUser = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User with ID " + id + " not found"));
 
-//        repository.findByEmail(dto.getEmail())
-//                .ifPresent(user -> {
-//                    throw new DuplicateEmailException(dto.getEmail());
-//                });
-//        repository.findByPhone(dto.getPhone())
-//                .ifPresent(user -> {
-//                    throw new ResponseStatusException(HttpStatus.CONFLICT, "Phone number already exists");
-//                });
-
         mapper.map(dto, foundUser);
 
         if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
             foundUser.setPassword(encoder.encode(dto.getPassword()));
+        }
+
+        if (dto.getAddress() != null) {
+            Address address = mapper.map(dto.getAddress(), Address.class);
+            Address savedAddress = addressRepository.save(address);
+            foundUser.setAddress(savedAddress);
         }
 
         return mapper.map(repository.save(foundUser), UserResponseDto.class);
