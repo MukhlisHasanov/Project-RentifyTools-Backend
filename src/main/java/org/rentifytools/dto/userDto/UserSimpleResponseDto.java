@@ -5,7 +5,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
 public class UserSimpleResponseDto {
     private String firstname;
     private String lastname;

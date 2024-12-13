@@ -21,6 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
 
     private final TokenFilter filter;
+
     @Bean
     public BCryptPasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
@@ -37,26 +38,28 @@ public class SecurityConfiguration {
 //        return http.build();
 //    }
 
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(x->x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(x -> x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers("/v3/api-docs/**", "/configuration/ui", "/swagger-resources/**",
                                         "/configuration/security", "/swagger-ui/**", "/webjars/**",
                                         "/swagger-resources/configuration/ui", "/swagger-ui/index.html").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/files/upload").hasAnyRole("USER","ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/files/upload").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/users/check-email").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasAnyRole("USER","ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/users/me").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/users/{id}").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.POST, "/api/users/search").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.PATCH, "/api/users/{id}").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.DELETE, "/api/users/me").hasAnyRole("USER","ADMIN")
                                 .requestMatchers(HttpMethod.GET, "/api/tools").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/tools/{toolId}").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/tools/me").hasAnyRole("USER","ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/tools/me").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers(HttpMethod.GET, "/api/tools/search").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/tools").hasAnyRole("USER","ADMIN")
                                 .requestMatchers(HttpMethod.PUT, "/api/tools/{toolId}").hasAnyRole("USER","ADMIN")
@@ -66,6 +69,8 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.GET, "/api/tools/category/{categoryId}").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/categories").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/refresh").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/address").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/address").hasAnyRole("USER", "ADMIN")
                                 .anyRequest().authenticated())
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class);
