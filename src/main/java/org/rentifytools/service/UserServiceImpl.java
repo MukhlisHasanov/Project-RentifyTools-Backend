@@ -5,10 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.rentifytools.dto.userDto.UserRequestDto;
 import org.rentifytools.dto.userDto.UserResponseDto;
+import org.rentifytools.entity.Address;
 import org.rentifytools.entity.Role;
 import org.rentifytools.entity.User;
 import org.rentifytools.exception.DuplicateEmailException;
 import org.rentifytools.exception.NotFoundException;
+import org.rentifytools.repository.AddressRepository;
 import org.rentifytools.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,8 +23,9 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private final UserRepository repository;
+    private final AddressRepository addressRepository;
     private final RoleService roleService;
     private final BCryptPasswordEncoder encoder;
     private final ModelMapper mapper;
@@ -42,6 +45,12 @@ public class UserServiceImpl implements UserService{
 
         User user = mapper.map(dto, User.class);
 
+        if (dto.getAddress() != null) {
+            Address address = mapper.map(dto.getAddress(), Address.class);
+            Address savedAddress = addressRepository.save(address);
+            user.setAddress(savedAddress);
+        }
+
         user.setPassword(encoder.encode(dto.getPassword()));
         user.setRoles(Set.of(roleService.getRole("USER")));
 
@@ -57,19 +66,16 @@ public class UserServiceImpl implements UserService{
         User foundUser = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User with ID " + id + " not found"));
 
-//        repository.findByEmail(dto.getEmail())
-//                .ifPresent(user -> {
-//                    throw new DuplicateEmailException(dto.getEmail());
-//                });
-//        repository.findByPhone(dto.getPhone())
-//                .ifPresent(user -> {
-//                    throw new ResponseStatusException(HttpStatus.CONFLICT, "Phone number already exists");
-//                });
-
         mapper.map(dto, foundUser);
 
         if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
             foundUser.setPassword(encoder.encode(dto.getPassword()));
+        }
+
+        if (dto.getAddress() != null) {
+            Address address = mapper.map(dto.getAddress(), Address.class);
+            Address savedAddress = addressRepository.save(address);
+            foundUser.setAddress(savedAddress);
         }
 
         return mapper.map(repository.save(foundUser), UserResponseDto.class);
