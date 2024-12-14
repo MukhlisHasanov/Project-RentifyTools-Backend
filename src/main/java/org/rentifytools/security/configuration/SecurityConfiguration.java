@@ -70,6 +70,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.POST, "/api/categories").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/refresh").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/address").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/address/city-zip").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/address").hasAnyRole("USER", "ADMIN")
                                 .anyRequest().authenticated())
                 .httpBasic(AbstractHttpConfigurer::disable)

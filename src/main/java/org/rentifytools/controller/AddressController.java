@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.rentifytools.dto.addressDto.AddressRequestDto;
 import org.rentifytools.dto.addressDto.AddressResponseDto;
+import org.rentifytools.dto.addressDto.CityAndZipCodeDto;
 import org.rentifytools.dto.toolDto.ToolRequestDto;
 import org.rentifytools.dto.toolDto.ToolResponseDto;
 import org.rentifytools.service.AddressService;
@@ -27,6 +28,12 @@ public class AddressController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(tools, HttpStatus.OK);
+    }
+
+    @GetMapping("/city-zip")
+    public ResponseEntity<List<CityAndZipCodeDto>> getCitiesAndZipCodes() {
+        List<CityAndZipCodeDto> citiesAndZipCodes = addressService.getAllCityAndZipCodes();
+        return ResponseEntity.ok(citiesAndZipCodes);
     }
 
     @Operation(summary = "Adding new address to the DB")
