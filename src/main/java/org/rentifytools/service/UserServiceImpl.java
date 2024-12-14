@@ -73,12 +73,6 @@ public class UserServiceImpl implements UserService {
             foundUser.setPassword(encoder.encode(dto.getPassword()));
         }
 
-//        if (dto.getAddress() != null) {
-//            Address address = mapper.map(dto.getAddress(), Address.class);
-//            Address savedAddress = addressRepository.save(address);
-//            foundUser.setAddress(savedAddress);
-//        }
-
         return mapper.map(repository.save(foundUser), UserResponseDto.class);
     }
 
