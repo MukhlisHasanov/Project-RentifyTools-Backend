@@ -4,10 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.rentifytools.dto.addressDto.AddressRequestDto;
 import org.rentifytools.dto.addressDto.AddressResponseDto;
-import org.rentifytools.dto.toolDto.ToolRequestDto;
-import org.rentifytools.dto.toolDto.ToolResponseDto;
-import org.rentifytools.dto.userDto.UserRequestDto;
-import org.rentifytools.dto.userDto.UserResponseDto;
 import org.rentifytools.service.AddressService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,5 +37,11 @@ public class AddressController {
     @PutMapping("/{addressId}")
     public ResponseEntity<AddressResponseDto> updateAddress(@PathVariable(name = "addressId") Long addressId, @RequestBody AddressRequestDto addressDto) {
         return new ResponseEntity<>(addressService.updateAddress(addressId, addressDto), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Removing a address from the list")
+    @DeleteMapping("/{addressId}")
+    public ResponseEntity<AddressResponseDto> deleteAddress(@PathVariable(name = "addressId") Long addressId) {
+        return new ResponseEntity<>(addressService.deleteAddress(addressId), HttpStatus.OK);
     }
 }

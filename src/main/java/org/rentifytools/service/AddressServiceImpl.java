@@ -40,11 +40,6 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressResponseDto findAddressByUserId(Long id) {
-        return null;
-    }
-
-    @Override
     @Transactional
     public AddressResponseDto updateAddress(Long id, AddressRequestDto dto) {
         Address foundAddress = findAddressById(id);
