@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.rentifytools.dto.addressDto.AddressRequestDto;
 import org.rentifytools.dto.addressDto.AddressResponseDto;
+import org.rentifytools.dto.addressDto.CityAndZipCodeDto;
 import org.rentifytools.entity.Address;
 import org.rentifytools.exception.NotFoundException;
 import org.rentifytools.repository.AddressRepository;
@@ -54,5 +55,10 @@ public class AddressServiceImpl implements AddressService {
     public List<AddressResponseDto> getAddresses() {
         return addressRepository.findAll().stream()
                 .map(address -> mapper.map(address, AddressResponseDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CityAndZipCodeDto> getAllCityAndZipCodes() {
+        return addressRepository.findAllCityAndZipCodes();
     }
 }

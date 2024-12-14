@@ -42,11 +42,18 @@ public class Address {
         if (o == null || getClass() != o.getClass()) return false;
 
         Address address = (Address) o;
-        return Objects.equals(id, address.id);
+        return Objects.equals(country, address.country) &&
+                Objects.equals(zipCode, address.zipCode) &&
+                Objects.equals(city, address.city) &&
+                Objects.equals(street, address.street);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        int result = Objects.hashCode(country);
+        result = 31 * result + Objects.hashCode(zipCode);
+        result = 31 * result + Objects.hashCode(city);
+        result = 31 * result + Objects.hashCode(street);
+        return result;
     }
 }

@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -56,7 +57,10 @@ public class UserServiceImpl implements UserService {
 
         if (dto.getAddress() != null) {
             Address address = mapper.map(dto.getAddress(), Address.class);
-            Address savedAddress = addressRepository.save(address);
+            Optional<Address> existingAddress = addressRepository.findAll().stream()
+                    .filter(address::equals)
+                    .findFirst();
+            Address savedAddress = existingAddress.orElseGet(() -> addressRepository.save(address));
             user.setAddress(savedAddress);
         }
 
@@ -72,21 +76,47 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserResponseDto updateUser(Long id, UserRequestDto dto) {
+        // Ищем пользователя
         User foundUser = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User with ID " + id + " not found"));
 
+        // Обновляем поля пользователя
         mapper.map(dto, foundUser);
 
+        // Обновляем пароль, если он указан
         if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
             foundUser.setPassword(encoder.encode(dto.getPassword()));
         }
 
+        // Работа с адресом
         if (dto.getAddress() != null) {
-            Address address = mapper.map(dto.getAddress(), Address.class);
-            Address savedAddress = addressRepository.save(address);
-            foundUser.setAddress(savedAddress);
+            Address currentAddress = foundUser.getAddress(); // Текущий адрес пользователя
+            Address newAddress = mapper.map(dto.getAddress(), Address.class);
+
+            if (currentAddress != null) {
+                // Проверяем, изменились ли поля адреса
+                if (!currentAddress.equals(newAddress)) {
+                    // Проверяем, используется ли адрес другими пользователями
+                    long usersWithAddressCount = repository.countByAddressId(currentAddress.getId());
+
+                    if (usersWithAddressCount > 1) {
+                        // Адрес используется другими пользователями, создаём новый адрес
+                        Address savedAddress = addressRepository.save(newAddress);
+                        foundUser.setAddress(savedAddress);
+                    } else {
+                        // Адрес больше никому не принадлежит, обновляем его
+                        mapper.map(dto.getAddress(), currentAddress);
+                        addressRepository.save(currentAddress);
+                    }
+                }
+            } else {
+                // Если адреса не было, создаём новый
+                Address savedAddress = addressRepository.save(newAddress);
+                foundUser.setAddress(savedAddress);
+            }
         }
 
+        // Сохраняем изменения пользователя
         return mapper.map(repository.save(foundUser), UserResponseDto.class);
     }
 
