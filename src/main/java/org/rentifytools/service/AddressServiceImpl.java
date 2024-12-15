@@ -55,6 +55,7 @@ public class AddressServiceImpl implements AddressService {
         addressRepository.deleteById(id);
         return mapper.map(address, AddressResponseDto.class);
     }
+
     @Override
     public List<CityAndZipCodeDto> getAllCityAndZipCodes() {
         return addressRepository.findAllCityAndZipCodes();
