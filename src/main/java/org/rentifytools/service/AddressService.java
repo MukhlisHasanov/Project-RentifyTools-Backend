@@ -9,7 +9,7 @@ import java.util.List;
 public interface AddressService {
     AddressResponseDto addAddress(AddressRequestDto address);
 
-    AddressResponseDto updateAddress(AddressRequestDto address);
+    AddressResponseDto updateAddress(Long id, AddressRequestDto address);
 
     AddressResponseDto deleteAddress(Long id);
 

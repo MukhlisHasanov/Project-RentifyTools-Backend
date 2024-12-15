@@ -1,17 +1,14 @@
 package org.rentifytools.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@ToString(exclude = "users")
+@ToString(exclude = "user")
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "addresses")
@@ -33,8 +30,9 @@ public class Address {
     @Column(name = "street")
     private String street;
 
-    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
-    private Set<User> users = new HashSet<>();
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     @Override
     public boolean equals(Object o) {

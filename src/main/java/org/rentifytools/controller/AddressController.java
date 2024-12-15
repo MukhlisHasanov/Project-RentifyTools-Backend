@@ -41,4 +41,16 @@ public class AddressController {
     public ResponseEntity<AddressResponseDto> addAddress(@RequestBody AddressRequestDto dto) {
         return new ResponseEntity<>(addressService.addAddress(dto), HttpStatus.CREATED);
     }
+
+    @Operation(summary = "Editing user information")
+    @PutMapping("/{addressId}")
+    public ResponseEntity<AddressResponseDto> updateAddress(@PathVariable(name = "addressId") Long addressId, @RequestBody AddressRequestDto addressDto) {
+        return new ResponseEntity<>(addressService.updateAddress(addressId, addressDto), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Removing a address from the list")
+    @DeleteMapping("/{addressId}")
+    public ResponseEntity<AddressResponseDto> deleteAddress(@PathVariable(name = "addressId") Long addressId) {
+        return new ResponseEntity<>(addressService.deleteAddress(addressId), HttpStatus.OK);
+    }
 }
