@@ -33,9 +33,9 @@ public class ToolServiceImpl implements ToolService {
     private final ModelMapper mapper;
 
     @Override
-    public List<ToolResponseDto> getAllTools() {
+    public List<ToolUserResponseDto> getAllTools() {
         return toolRepository.findAll().stream()
-                .map(tool -> mapper.map(tool, ToolResponseDto.class)).toList();
+                .map(tool -> mapper.map(tool, ToolUserResponseDto.class)).toList();
     }
 
     public Tool findToolById(Long toolId) {
