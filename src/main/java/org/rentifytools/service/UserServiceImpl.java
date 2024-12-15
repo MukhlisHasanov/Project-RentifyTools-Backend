@@ -75,10 +75,13 @@ public class UserServiceImpl implements UserService {
         User foundUser = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User with ID " + id + " not found"));
 
+        String oldPassword = foundUser.getPassword();
         mapper.map(dto, foundUser);
 
         if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
             foundUser.setPassword(encoder.encode(dto.getPassword()));
+        } else {
+            foundUser.setPassword(oldPassword);
         }
 
         return mapper.map(repository.save(foundUser), UserResponseDto.class);
