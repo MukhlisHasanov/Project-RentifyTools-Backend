@@ -51,7 +51,11 @@ public class AddressServiceImpl implements AddressService {
     @Override
     @Transactional
     public AddressResponseDto deleteAddress(Long id) {
-        Address address = findAddressById(id);
+//        Address address = findAddressById(id);
+//        addressRepository.deleteById(id);
+        String exceptionMessage = "Address with ID %d not found";
+        Address address = addressRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.format(exceptionMessage, id)));
         addressRepository.deleteById(id);
         return mapper.map(address, AddressResponseDto.class);
     }
