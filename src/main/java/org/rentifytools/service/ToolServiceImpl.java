@@ -77,20 +77,6 @@ public class ToolServiceImpl implements ToolService {
                 .toList();
     }
 
-//   ===================================
-//    @Override
-//    public List<ToolResponseDto> getToolsByStatus(ToolsAvailabilityStatus status) {
-//        if(status == null) {
-//            return getAllTools();
-//        } else {
-//            List<Tool> toolByStatus = toolRepository.findByStatus(status);
-//            return toolByStatus.stream()
-//                    .map(tool -> mapper.map(tool, ToolResponseDto.class))
-//                    .toList();
-//        }
-//    }
-//   ===================================
-
     @Override
     public List<ToolResponseDto> getAllToolsByUser() {
         Long userId = SecurityUtils.getCurrentUserId();
