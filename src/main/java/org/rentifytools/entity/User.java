@@ -41,8 +41,7 @@ public class User {
     @Column(unique = true, nullable = false)
     private String phone;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Address address;
 
     @ManyToMany(fetch = FetchType.EAGER)
