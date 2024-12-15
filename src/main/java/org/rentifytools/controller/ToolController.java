@@ -25,8 +25,8 @@ public class ToolController {
 
     @Operation(summary = "Getting all tools from DB")
     @GetMapping
-    public ResponseEntity<List<ToolResponseDto>> getAllTools() {
-        List<ToolResponseDto> tools = toolService.getAllTools();
+    public ResponseEntity<List<ToolUserResponseDto>> getAllTools() {
+        List<ToolUserResponseDto> tools = toolService.getAllTools();
         if (tools.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
