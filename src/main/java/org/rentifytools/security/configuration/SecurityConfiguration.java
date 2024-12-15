@@ -28,16 +28,6 @@ public class SecurityConfiguration {
     }
 
     @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .csrf(csrf -> csrf.disable()) // Отключаем CSRF защиту
-//                .authorizeHttpRequests(authorize -> authorize
-//                        .anyRequest().permitAll() // Разрешаем доступ ко всем запросам
-//                );
-//
-//        return http.build();
-//    }
-
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
@@ -48,14 +38,16 @@ public class SecurityConfiguration {
                                         "/configuration/security", "/swagger-ui/**", "/webjars/**",
                                         "/swagger-resources/configuration/ui", "/swagger-ui/index.html").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/files/upload").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/users/check-email").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
                                 .requestMatchers(HttpMethod.PUT, "/api/users/{id}").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/users/me").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/users/{id}").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.POST, "/api/users/search").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.PATCH, "/api/users/{id}").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.DELETE, "/api/users/me").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers(HttpMethod.GET, "/api/tools").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/tools/{toolId}").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/tools/me").hasAnyRole("USER", "ADMIN")
@@ -69,6 +61,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.POST, "/api/categories").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/refresh").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/address").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/address/city-zip").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/address").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers(HttpMethod.PUT, "/api/address/{id}").hasAnyRole("USER", "ADMIN")
                                 .anyRequest().authenticated())
