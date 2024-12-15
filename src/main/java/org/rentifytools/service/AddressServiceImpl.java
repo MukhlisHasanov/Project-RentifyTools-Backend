@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.rentifytools.dto.addressDto.AddressRequestDto;
 import org.rentifytools.dto.addressDto.AddressResponseDto;
+import org.rentifytools.dto.addressDto.CityAndZipCodeDto;
 import org.rentifytools.entity.Address;
 import org.rentifytools.exception.NotFoundException;
 import org.rentifytools.repository.AddressRepository;
@@ -28,31 +29,36 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    @Transactional
-    public AddressResponseDto updateAddress(AddressRequestDto dto) {
-        return null;
+    public List<AddressResponseDto> getAddresses() {
+        return addressRepository.findAll().stream()
+                .map(address -> mapper.map(address, AddressResponseDto.class)).collect(Collectors.toList());
     }
 
-//    @Override
-//    public Address deleteAddress(Long id) {
-//        String exceptionMessage = "Address with ID %d not found";
-//        return addressRepository.findById(id)
-//                .orElseThrow(() -> new NotFoundException(String.format(exceptionMessage, id)));
-//    }
+    public Address findAddressById(Long id) {
+        String exceptionMessage = "Address with ID %d not found";
+        return addressRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.format(exceptionMessage, id)));
+    }
+
+    @Override
+    @Transactional
+    public AddressResponseDto updateAddress(Long id, AddressRequestDto dto) {
+        Address foundAddress = findAddressById(id);
+        mapper.map(dto, foundAddress);
+        return mapper.map(addressRepository.save(foundAddress), AddressResponseDto.class);
+    }
 
     @Override
     @Transactional
     public AddressResponseDto deleteAddress(Long id) {
-        String exceptionMessage = "Address with ID %d not found";
-        Address address = addressRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format(exceptionMessage, id)));
+        Address address = findAddressById(id);
         addressRepository.deleteById(id);
         return mapper.map(address, AddressResponseDto.class);
     }
 
     @Override
-    public List<AddressResponseDto> getAddresses() {
-        return addressRepository.findAll().stream()
-                .map(address -> mapper.map(address, AddressResponseDto.class)).collect(Collectors.toList());
+    public List<CityAndZipCodeDto> getAllCityAndZipCodes() {
+        return addressRepository.findAllCityAndZipCodes();
+
     }
 }

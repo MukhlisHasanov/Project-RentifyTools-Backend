@@ -1,12 +1,15 @@
 package org.rentifytools.service;
 
 import org.rentifytools.dto.addressDto.AddressRequestDto;
+import org.rentifytools.dto.userDto.UserLoginDto;
 import org.rentifytools.dto.userDto.UserRequestDto;
 import org.rentifytools.dto.userDto.UserResponseDto;
 
 import java.util.List;
 
 public interface UserService {
+
+    void checkEmail(UserLoginDto dto);
 
     UserResponseDto createUser(UserRequestDto dto);
 

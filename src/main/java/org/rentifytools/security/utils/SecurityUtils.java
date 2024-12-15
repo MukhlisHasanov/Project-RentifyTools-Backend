@@ -9,6 +9,9 @@ public class SecurityUtils {
 
     public static Long getCurrentUserId() {
         var authentication = getAuthentication();
+        if (authentication == null || !(authentication.getPrincipal() instanceof String)) {
+            throw new IllegalStateException("User is not authenticated");
+        }
         return Long.valueOf(authentication.getPrincipal().toString());
     }
 
