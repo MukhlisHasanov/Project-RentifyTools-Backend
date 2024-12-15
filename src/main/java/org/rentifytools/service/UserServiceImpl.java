@@ -58,14 +58,13 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encoder.encode(dto.getPassword()));
         user.setRoles(Set.of(roleService.getRole("USER")));
 
-//        if (dto.getAddress() != null) {
         Address address = mapper.map(dto.getAddress(), Address.class);
         Address savedAddress = addressRepository.save(address);
         user.setAddress(savedAddress);
 
         User savedUser = repository.save(user);
         savedAddress.setUser(savedUser);
-//        }
+
         return mapper.map(savedUser, UserResponseDto.class);
     }
 
@@ -81,12 +80,6 @@ public class UserServiceImpl implements UserService {
         if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
             foundUser.setPassword(encoder.encode(dto.getPassword()));
         }
-
-//        if (dto.getAddress() != null) {
-//            Address address = mapper.map(dto.getAddress(), Address.class);
-//            Address savedAddress = addressRepository.save(address);
-//            foundUser.setAddress(savedAddress);
-//        }
 
         return mapper.map(repository.save(foundUser), UserResponseDto.class);
     }
