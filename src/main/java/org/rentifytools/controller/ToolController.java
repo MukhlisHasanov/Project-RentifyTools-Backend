@@ -48,7 +48,7 @@ public class ToolController {
         return toolService.getToolById(toolId);
     }
 
-    @Operation(summary = "Getting tool by id")
+    @Operation(summary = "Getting category by id")
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<List<ToolResponseDto>> getToolByCategory(@PathVariable Long categoryId) {
         List<ToolResponseDto> tools = toolService.getToolsByCategory(categoryId);
