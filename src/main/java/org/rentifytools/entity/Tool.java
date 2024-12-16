@@ -31,11 +31,9 @@ public class Tool {
     private User user;
 
     @Column(name = "title")
-    @Size(min = 3, max = 50, message = "Advert title can be between 3 and 63 characters long")
     private String title;
 
     @Column(name = "description")
-    @Size(max = 1500, message = "Description may contain no more than 1500 characters.")
     private String description;
 
     @Column(name = "status")
@@ -43,7 +41,6 @@ public class Tool {
     private ToolsAvailabilityStatus status;
 
     @Column(name = "price")
-    @DecimalMin(value = "0.0", message = "Price must be a positive number and can't be less than 0.")
     private Double price;
 
     @OneToMany(mappedBy = "tool", cascade = CascadeType.ALL, orphanRemoval = true)

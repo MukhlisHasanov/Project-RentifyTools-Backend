@@ -2,10 +2,12 @@ package org.rentifytools.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.rentifytools.dto.toolDto.ToolRequestDto;
 import org.rentifytools.dto.toolDto.ToolResponseDto;
 import org.rentifytools.dto.toolDto.ToolUserResponseDto;
+import org.rentifytools.entity.Tool;
 import org.rentifytools.enums.ToolsAvailabilityStatus;
 import org.rentifytools.exception.NotFoundException;
 import org.rentifytools.service.ToolService;
@@ -70,9 +72,10 @@ public class ToolController {
 
     @Operation(summary = "Adding new tool to the list")
     @PostMapping
-    public ResponseEntity<ToolResponseDto> addTool(@RequestBody ToolRequestDto dto) {
+    public ResponseEntity<ToolResponseDto> addTool(@Valid @RequestBody ToolRequestDto dto) {
         return new ResponseEntity<>(toolService.addNewTool(dto), HttpStatus.CREATED);
     }
+
 
     @Operation(summary = "Editing tool information")
     @PutMapping("/{toolId}")
