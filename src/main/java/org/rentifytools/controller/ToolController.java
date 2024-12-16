@@ -57,11 +57,6 @@ public class ToolController {
         }
         return new ResponseEntity<>(tools, HttpStatus.OK);
     }
-//    @Operation(summary = "Getting tools by name")
-//    @GetMapping("/{toolName}")
-//    public List<ToolResponseDto> getToolByTitle(@RequestParam(name = "toolName") String toolTitle) {
-//        return toolService.getToolsByTitle(toolTitle);
-//    }
 
     @Operation(summary = "Getting tools by name")
     @GetMapping("/search")
@@ -72,14 +67,6 @@ public class ToolController {
         }
         return new ResponseEntity<>(tools, HttpStatus.OK);
     }
-
-
-//    @Operation(summary = "Getting tools by status")
-//    @GetMapping()
-//    public List<ToolResponseDto> getToolsByStatus(@RequestParam(name = "status", required = false) ToolsAvailabilityStatus status) {
-//        return toolService.getToolsByStatus(status);
-//    }
-
 
     @Operation(summary = "Adding new tool to the list")
     @PostMapping
