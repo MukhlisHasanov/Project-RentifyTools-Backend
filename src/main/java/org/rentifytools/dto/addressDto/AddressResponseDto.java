@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class AddressResponseDto {
     private String country;
-    private String zipcode;
+    private String zipCode;
     private String city;
     private String street;
 }

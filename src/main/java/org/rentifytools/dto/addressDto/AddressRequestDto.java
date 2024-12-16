@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class AddressRequestDto {
     private String country;
-    private String zipcode;
+    private String zipCode;
     private String city;
     private String street;
 }
