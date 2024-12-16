@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.rentifytools.dto.addressDto.AddressRequestDto;
 import org.rentifytools.dto.addressDto.AddressResponseDto;
+import org.rentifytools.dto.addressDto.CityAndZipCodeDto;
 import org.rentifytools.entity.Address;
 import org.rentifytools.exception.NotFoundException;
 import org.rentifytools.repository.AddressRepository;
@@ -40,11 +41,6 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressResponseDto findAddressByUserId(Long id) {
-        return null;
-    }
-
-    @Override
     @Transactional
     public AddressResponseDto updateAddress(Long id, AddressRequestDto dto) {
         Address foundAddress = findAddressById(id);
@@ -55,8 +51,18 @@ public class AddressServiceImpl implements AddressService {
     @Override
     @Transactional
     public AddressResponseDto deleteAddress(Long id) {
-        Address address = findAddressById(id);
+//        Address address = findAddressById(id);
+//        addressRepository.deleteById(id);
+        String exceptionMessage = "Address with ID %d not found";
+        Address address = addressRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.format(exceptionMessage, id)));
         addressRepository.deleteById(id);
         return mapper.map(address, AddressResponseDto.class);
+    }
+
+    @Override
+    public List<CityAndZipCodeDto> getAllCityAndZipCodes() {
+        return addressRepository.findAllCityAndZipCodes();
+
     }
 }

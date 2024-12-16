@@ -3,6 +3,8 @@ package org.rentifytools.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.rentifytools.enums.ToolsAvailabilityStatus;
 

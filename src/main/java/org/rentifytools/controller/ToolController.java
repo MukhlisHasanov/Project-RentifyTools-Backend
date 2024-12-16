@@ -2,10 +2,12 @@ package org.rentifytools.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.rentifytools.dto.toolDto.ToolRequestDto;
 import org.rentifytools.dto.toolDto.ToolResponseDto;
 import org.rentifytools.dto.toolDto.ToolUserResponseDto;
+import org.rentifytools.entity.Tool;
 import org.rentifytools.enums.ToolsAvailabilityStatus;
 import org.rentifytools.exception.NotFoundException;
 import org.rentifytools.service.ToolService;
@@ -25,8 +27,8 @@ public class ToolController {
 
     @Operation(summary = "Getting all tools from DB")
     @GetMapping
-    public ResponseEntity<List<ToolResponseDto>> getAllTools() {
-        List<ToolResponseDto> tools = toolService.getAllTools();
+    public ResponseEntity<List<ToolUserResponseDto>> getAllTools() {
+        List<ToolUserResponseDto> tools = toolService.getAllTools();
         if (tools.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -48,7 +50,7 @@ public class ToolController {
         return toolService.getToolById(toolId);
     }
 
-    @Operation(summary = "Getting tool by id")
+    @Operation(summary = "Getting category by id")
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<List<ToolResponseDto>> getToolByCategory(@PathVariable Long categoryId) {
         List<ToolResponseDto> tools = toolService.getToolsByCategory(categoryId);
@@ -57,11 +59,6 @@ public class ToolController {
         }
         return new ResponseEntity<>(tools, HttpStatus.OK);
     }
-//    @Operation(summary = "Getting tools by name")
-//    @GetMapping("/{toolName}")
-//    public List<ToolResponseDto> getToolByTitle(@RequestParam(name = "toolName") String toolTitle) {
-//        return toolService.getToolsByTitle(toolTitle);
-//    }
 
     @Operation(summary = "Getting tools by name")
     @GetMapping("/search")
@@ -73,19 +70,12 @@ public class ToolController {
         return new ResponseEntity<>(tools, HttpStatus.OK);
     }
 
-
-//    @Operation(summary = "Getting tools by status")
-//    @GetMapping()
-//    public List<ToolResponseDto> getToolsByStatus(@RequestParam(name = "status", required = false) ToolsAvailabilityStatus status) {
-//        return toolService.getToolsByStatus(status);
-//    }
-
-
     @Operation(summary = "Adding new tool to the list")
     @PostMapping
-    public ResponseEntity<ToolResponseDto> addTool(@RequestBody ToolRequestDto dto) {
+    public ResponseEntity<ToolResponseDto> addTool(@Valid @RequestBody ToolRequestDto dto) {
         return new ResponseEntity<>(toolService.addNewTool(dto), HttpStatus.CREATED);
     }
+
 
     @Operation(summary = "Editing tool information")
     @PutMapping("/{toolId}")

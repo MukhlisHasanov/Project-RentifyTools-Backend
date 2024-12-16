@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ToolService {
 
-    List<ToolResponseDto> getAllTools();
+    List<ToolUserResponseDto> getAllTools();
 
     ToolUserResponseDto getToolById(Long toolId);
 

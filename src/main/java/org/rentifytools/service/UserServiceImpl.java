@@ -3,6 +3,7 @@ package org.rentifytools.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.rentifytools.dto.userDto.UserLoginDto;
 import org.rentifytools.dto.userDto.UserRequestDto;
 import org.rentifytools.dto.userDto.UserResponseDto;
 import org.rentifytools.entity.Address;
@@ -19,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -29,6 +31,14 @@ public class UserServiceImpl implements UserService {
     private final RoleService roleService;
     private final BCryptPasswordEncoder encoder;
     private final ModelMapper mapper;
+
+    @Override
+    public void checkEmail(UserLoginDto dto) {
+        repository.findByEmail(dto.getEmail())
+                .ifPresent(user -> {
+                    throw new DuplicateEmailException(dto.getEmail());
+                });
+    }
 
     @Override
     @Transactional
@@ -45,16 +55,15 @@ public class UserServiceImpl implements UserService {
 
         User user = mapper.map(dto, User.class);
 
-        if (dto.getAddress() != null) {
-            Address address = mapper.map(dto.getAddress(), Address.class);
-            Address savedAddress = addressRepository.save(address);
-            user.setAddress(savedAddress);
-        }
-
         user.setPassword(encoder.encode(dto.getPassword()));
         user.setRoles(Set.of(roleService.getRole("USER")));
 
+        Address address = mapper.map(dto.getAddress(), Address.class);
+        Address savedAddress = addressRepository.save(address);
+        user.setAddress(savedAddress);
+
         User savedUser = repository.save(user);
+        savedAddress.setUser(savedUser);
 
         return mapper.map(savedUser, UserResponseDto.class);
     }
@@ -66,16 +75,13 @@ public class UserServiceImpl implements UserService {
         User foundUser = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User with ID " + id + " not found"));
 
+        String oldPassword = foundUser.getPassword();
         mapper.map(dto, foundUser);
 
         if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
             foundUser.setPassword(encoder.encode(dto.getPassword()));
-        }
-
-        if (dto.getAddress() != null) {
-            Address address = mapper.map(dto.getAddress(), Address.class);
-            Address savedAddress = addressRepository.save(address);
-            foundUser.setAddress(savedAddress);
+        } else {
+            foundUser.setPassword(oldPassword);
         }
 
         return mapper.map(repository.save(foundUser), UserResponseDto.class);
@@ -123,7 +129,11 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new NotFoundException("User with id " + id + " not found"));
         Role roleAdmin = roleService.getRole(title);
         HashSet<Role> roles = new HashSet<>(entity.getRoles());
-        roles.add(roleAdmin);
+        if (roles.contains(roleAdmin)) {
+            roles.remove(roleAdmin);
+        } else {
+            roles.add(roleAdmin);
+        }
         entity.setRoles(roles);
         entity = repository.save(entity);
         return mapper.map(entity, UserResponseDto.class);
